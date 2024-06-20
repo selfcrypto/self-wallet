@@ -51,14 +51,14 @@
           class="accounts__action-divider"
         />
 
-        <a
+        <!-- <a
           v-if="hwWallet.isNetworkSupported(network.name)"
           class="accounts__action-button hardware"
           @click="openHardware(network.name)"
         >
           <add-hardware-account />
           Add hardware wallet account
-        </a>
+        </a> -->
 
         <a
           v-if="network.provider !== ProviderName.kadena"

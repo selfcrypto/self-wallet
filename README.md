@@ -175,5 +175,5 @@ update about in setting/about ✅
 
 remove swap ✅
 remove buy/sell ✅
-remove hardware wallet support
+remove hardware wallet support ✅
 remove fake wallets  
