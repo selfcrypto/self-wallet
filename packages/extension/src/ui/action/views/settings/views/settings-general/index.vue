@@ -20,35 +20,35 @@
       </p>
     </div>
 
-    <settings-switch
+    <!-- <settings-switch
       title="Turn off Polkadot-js injection"
       :is-checked="isPolkadotjsDisabled"
       @update:check="togglePjsDisable"
-    />
-    <div class="settings__label">
+    /> -->
+    <!-- <div class="settings__label">
       <p>Prevent conflict with Polkadot-js extension</p>
-    </div>
+    </div> -->
 
-    <settings-switch
+    <!-- <settings-switch
       title="Turn on Unisat injection"
       :is-checked="isUnisatEnabled"
       @update:check="toggleUnisatEnable"
-    />
-    <div class="settings__label">
+    /> -->
+    <!-- <div class="settings__label">
       <p>Enable Enkrypt act like Unisat wallet for dapps</p>
-    </div>
+    </div> -->
 
-    <settings-switch
+    <!-- <settings-switch
       title="Disable Amplitude Events"
       :is-checked="!isMetricsEnabled"
       @update:check="toggleMetricsEnabled"
-    />
-    <div class="settings__label">
+    /> -->
+    <!-- <div class="settings__label">
       <p>
         MEW uses Amplitude events to improve Enkrypt. No identifiable
         information is collected.
       </p>
-    </div>
+    </div> -->
 
     <!-- <base-select
       :select="selecTimer"

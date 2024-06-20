@@ -166,7 +166,7 @@ Tasks:
 Show only evm compatiple chains at main page ✅
 when enters manage networks show only evm chains ✅
 
-Remove 2,3,4 in setting/general
+Remove 2,3,4 in setting/general ✅
 
 update contact support in setting
 remove bounty program in setting
