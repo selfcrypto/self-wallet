@@ -12,7 +12,7 @@
     </div>
 
     <div class="settings__block">
-      <settings-button
+      <!-- <settings-button
         title="Bug bounty program"
         :is-link="true"
         @click="bugAction"
@@ -21,7 +21,7 @@
         title="Privacy and terms"
         :is-link="true"
         @click="privacyAction"
-      />
+      /> -->
       <settings-button title="About" @click="$emit('action:about')" />
     </div>
 
@@ -90,11 +90,7 @@ const privacyAction = () => {
 };
 
 const contactSupport = () => {
-  window.open(
-    "https://www.enkrypt.com/?ref=enkrypt_help",
-    "_blank",
-    "noopener"
-  );
+  window.open("https://selfcrypto.io/", "_blank", "noopener");
 };
 
 const toggleSign = () => {
