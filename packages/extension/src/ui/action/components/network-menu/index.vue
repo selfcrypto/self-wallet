@@ -14,14 +14,17 @@
     >
       <Activity /><br />Activity
     </router-link>
+    <!-- v-if="(network as EvmNetwork).NFTHandler" -->
     <router-link
-      v-if="(network as EvmNetwork).NFTHandler"
+      v-if="false"
       :to="{ name: 'nfts', params: { id: !!selected ? selected : null } }"
     >
       <NFTs /><br />NFTs
     </router-link>
+
+    <!-- v-if="DappList[network.name]" -->
     <router-link
-      v-if="DappList[network.name]"
+      v-if="false"
       :to="{
         name: 'dapps',
         params: { id: !!selected ? selected : null },
