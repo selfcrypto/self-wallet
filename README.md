@@ -168,12 +168,12 @@ when enters manage networks show only evm chains ✅
 
 Remove 2,3,4 in setting/general ✅
 
-update contact support in setting
-remove bounty program in setting
-remove privacy and terms in setting
-update about in setting/about
+update contact support in setting ✅
+remove bounty program in setting ✅
+remove privacy and terms in setting ✅
+update about in setting/about ✅
 
-remove swap
-remove buy/sell
+remove swap ✅
+remove buy/sell ✅
 remove hardware wallet support
 remove fake wallets  

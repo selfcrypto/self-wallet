@@ -5,10 +5,10 @@
         <Deposit />Deposit
       </a>
       <div class="network-activity__action-divider" />
-      <a class="network-activity__action-item" @click="$emit('open:buyAction')">
+      <!-- <a class="network-activity__action-item" @click="$emit('open:buyAction')">
         <Buy />Buy/Sell
-      </a>
-      <div class="network-activity__action-divider" />
+      </a> -->
+      <!-- <div class="network-activity__action-divider" /> -->
       <router-link
         :to="{
           name: 'send-transaction',
@@ -18,8 +18,8 @@
       >
         <Send />Send
       </router-link>
-      <div class="network-activity__action-divider" />
-      <router-link
+      <!-- <div class="network-activity__action-divider" /> -->
+      <!-- <router-link
         class="network-activity__action-item"
         :to="{
           name: 'swap',
@@ -27,7 +27,7 @@
         }"
       >
         <Swap />Swap
-      </router-link>
+      </router-link> -->
     </div>
   </div>
 </template>
