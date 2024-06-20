@@ -68,7 +68,7 @@ const POPULAR_NAMES = [
   // NetworkNames.Bitcoin,
   NetworkNames.Ethereum,
   NetworkNames.Matic,
-  // NetworkNames.Polkadot,
+  NetworkNames.Polkadot,
   NetworkNames.Binance,
   // NetworkNames.Rootstock,
   NetworkNames.Optimism,

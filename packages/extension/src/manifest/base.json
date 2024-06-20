@@ -1,9 +1,9 @@
 {
-  "author": "https://www.enkrypt.com",
-  "homepage_url": "https://www.enkrypt.com",
+  "author": "https://selfcrypto.io/",
+  "homepage_url": "https://selfcrypto.io/",
   "version": "",
-  "name": "Enkrypt Crypto Wallet: ETH, BTC, KDA & more!",
-  "short_name": "Enkrypt",
+  "name": "Self Crypto Wallet: ETH, BTC, KDA & more!",
+  "short_name": "Self Crypto",
   "permissions": [
     "storage",
     "unlimitedStorage",

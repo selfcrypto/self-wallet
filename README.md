@@ -161,7 +161,6 @@ yarn install in root
 yarn build:all in root
 yarn watch packages/extension
 
-
 Tasks:
 Show only evm compatiple chains at main page ✅
 when enters manage networks show only evm chains ✅
@@ -176,5 +175,5 @@ update about in setting/about ✅
 remove swap ✅
 remove buy/sell ✅
 remove hardware wallet support ✅
-remove fake wallets  ✅
-add self evm resolution
+remove fake wallets ✅
+add self evm resolution ✅
