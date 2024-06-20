@@ -17,11 +17,11 @@
       :is-link="true"
       @click="twitterAction"
     />
-    <settings-button
+    <!-- <settings-button
       title="Follow us on Discord"
       :is-link="true"
       @click="discordAction"
-    />
+    /> -->
   </div>
 </template>
 
@@ -30,15 +30,19 @@ import SettingsInnerHeader from "@action/views/settings/components/settings-inne
 import SettingsButton from "@action/views/settings/components/settings-button.vue";
 
 const siteAction = () => {
-  window.open("https://www.enkrypt.com/", "_blank", "noopener");
+  window.open("https://selfcrypto.io/", "_blank", "noopener");
 };
 
 const telegramAction = () => {
-  window.open("https://t.me/myetherwallet", "_blank", "noopener");
+  window.open("https://t.me/SELFcryptoIO", "_blank", "noopener");
 };
 
 const twitterAction = () => {
-  window.open("https://twitter.com/enkrypt", "_blank", "noopener");
+  window.open(
+    "https://twitter.com/SelfCryptoIO?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor",
+    "_blank",
+    "noopener"
+  );
 };
 
 const discordAction = () => {
