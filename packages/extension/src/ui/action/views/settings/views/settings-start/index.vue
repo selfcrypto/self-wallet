@@ -9,10 +9,17 @@
         :is-link="true"
         @click="contactSupport"
       />
+      <settings-button title="About" @click="$emit('action:about')" />
+      <settings-button title="View my recovery phrase" @click="toggleSign" />
+      <settings-button
+        title="Reset wallet"
+        :is-red="true"
+        @click="$emit('action:reset')"
+      />
     </div>
 
-    <div class="settings__block">
-      <!-- <settings-button
+    <!-- <div class="settings__block"> -->
+    <!-- <settings-button
         title="Bug bounty program"
         :is-link="true"
         @click="bugAction"
@@ -22,17 +29,11 @@
         :is-link="true"
         @click="privacyAction"
       /> -->
-      <settings-button title="About" @click="$emit('action:about')" />
-    </div>
+    <!-- </div> -->
 
-    <div class="settings__block">
-      <settings-button title="View my recovery phrase" @click="toggleSign" />
-      <settings-button
-        title="Reset wallet"
-        :is-red="true"
-        @click="$emit('action:reset')"
-      />
-    </div>
+    <!-- <div class="settings__block">
+
+    </div> -->
 
     <div class="settings__copyright">
       <p>Version {{ version }} ({{ buildTime }})</p>
