@@ -177,3 +177,4 @@ remove swap ✅
 remove buy/sell ✅
 remove hardware wallet support ✅
 remove fake wallets  ✅
+add self evm resolution

@@ -178,6 +178,9 @@ import { GenericNameResolver, CoinType } from "@/libs/name-resolver";
 import { NetworkNames } from "@enkryptcom/types";
 import { trackSendEvents } from "@/libs/metrics";
 import { SendEventType } from "@/libs/metrics/types";
+import { ethers } from "ethers";
+import { keccak256, toUtf8Bytes } from "ethers/lib/utils";
+import { SelfNftAddress } from "@/configs/constants";
 
 const props = defineProps({
   network: {
@@ -566,14 +569,24 @@ const inputAddressFrom = (text: string) => {
 };
 
 const inputAddressTo = async (text: string) => {
+  // nameResolver
+  //   .resolveName(text, [props.network.name as CoinType, "ETH"])
+  //   .then((resolved) => {
+  //     if (resolved) {
+  //       addressTo.value = resolved;
+  //     }
+  //   });
   const debounceResolve = debounce(() => {
-    nameResolver
-      .resolveName(text, [props.network.name as CoinType, "ETH"])
-      .then((resolved) => {
-        if (resolved) {
-          addressTo.value = resolved;
-        }
-      });
+    const provider = new ethers.providers.JsonRpcProvider(
+      "https://bsc.drpc.org	"
+    );
+    const selfContract = new ethers.Contract(SelfNftAddress, erc721, provider);
+
+    selfContract.ownerOf(keccak256(toUtf8Bytes(text))).then((resolved: any) => {
+      if (resolved) {
+        addressTo.value = resolved;
+      }
+    });
   }, 500);
   debounceResolve();
   addressTo.value = text;
