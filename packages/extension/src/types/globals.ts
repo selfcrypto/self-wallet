@@ -1,11 +1,11 @@
-import { SettingsType } from "@/libs/settings-state/types";
+import { SettingsType } from '@/libs/settings-state/types'
 
 export interface EnkryptWindow {
   enkrypt: {
     providers: {
-      [key: string]: any;
-    };
-    settings: SettingsType;
-  };
-  [key: string]: any;
+      [key: string]: any
+    }
+    settings: SettingsType
+  }
+  [key: string]: any
 }

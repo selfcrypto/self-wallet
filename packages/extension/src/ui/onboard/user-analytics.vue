@@ -5,7 +5,7 @@
       Privacy and<br />
       Data collection.
     </h3>
-    <p>We collect the following anonymous data about your use of Enkrypt:</p>
+    <p>We collect the following anonymous data about your use of SelfCrypto:</p>
     <p>
       Blockchain, browser, operating system, session time, actions and page
       views per visit, which we collect to enhance user experience with our
@@ -13,7 +13,7 @@
     </p>
     <p>
       Choosing to decline anonymous data collection will have no impact on your
-      experience using the Enkrypt browser extension. Full details about the
+      experience using the SelfCrypto browser extension. Full details about the
       anonymous data we collect and what we do with it are provided in our
       <a href="https://www.myetherwallet.com/privacy-policy" target="_blank"
         >Privacy Policy</a
@@ -31,44 +31,44 @@
   </div>
 </template>
 <script setup lang="ts">
-import LogoBig from "@action/icons/common/logo-big.vue";
-import BaseButton from "@action/components/base-button/index.vue";
-import SettingsState from "@/libs/settings-state";
-import { optOutofMetrics } from "@/libs/metrics";
-import { useRouter, useRoute } from "vue-router";
+import LogoBig from '@action/icons/common/logo-big.vue'
+import BaseButton from '@action/components/base-button/index.vue'
+import SettingsState from '@/libs/settings-state'
+import { optOutofMetrics } from '@/libs/metrics'
+import { useRouter, useRoute } from 'vue-router'
 
-const router = useRouter();
-const route = useRoute();
+const router = useRouter()
+const route = useRoute()
 
-const settingsState = new SettingsState();
+const settingsState = new SettingsState()
 
 const agree = async () => {
-  const enkryptSettings = await settingsState.getEnkryptSettings();
-  enkryptSettings.isMetricsEnabled = true;
-  await settingsState.setEnkryptSettings(enkryptSettings);
-  optOutofMetrics(false);
-  if (route.name === "user-privacy") {
-    window.close();
+  const enkryptSettings = await settingsState.getEnkryptSettings()
+  enkryptSettings.isMetricsEnabled = true
+  await settingsState.setEnkryptSettings(enkryptSettings)
+  optOutofMetrics(false)
+  if (route.name === 'user-privacy') {
+    window.close()
   } else {
-    router.push({ name: "new-wallet" });
+    router.push({ name: 'new-wallet' })
   }
-};
+}
 
 const deny = async () => {
-  const enkryptSettings = await settingsState.getEnkryptSettings();
-  enkryptSettings.isMetricsEnabled = false;
-  await settingsState.setEnkryptSettings(enkryptSettings);
-  optOutofMetrics(true);
-  if (route.name === "user-privacy") {
-    window.close();
+  const enkryptSettings = await settingsState.getEnkryptSettings()
+  enkryptSettings.isMetricsEnabled = false
+  await settingsState.setEnkryptSettings(enkryptSettings)
+  optOutofMetrics(true)
+  if (route.name === 'user-privacy') {
+    window.close()
   } else {
-    router.push({ name: "new-wallet" });
+    router.push({ name: 'new-wallet' })
   }
-};
+}
 </script>
 
 <style lang="less">
-@import "~@action/styles/theme.less";
+@import '~@action/styles/theme.less';
 
 .new-wallet {
   &__logo {

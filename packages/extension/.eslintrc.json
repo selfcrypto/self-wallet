@@ -25,7 +25,9 @@
     "prettier/prettier": [
       "error",
       {
-        "endOfLine": "lf"
+        "endOfLine": "lf",
+        "singleQuote": true,
+        "semi": false
       }
     ]
   }

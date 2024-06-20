@@ -6,7 +6,7 @@
     >
       <h3>Your safety and security is our #1 priority</h3>
       <p>
-        We don't support keystore file and private key imports in Enkrypt, as
+        We don't support keystore file and private key imports in SelfCrypto, as
         they are highly unsafe.
       </p>
       <p>
@@ -16,25 +16,25 @@
       </p>
       <p>
         For maximum security its best to create a new wallet directly in
-        Enkrypt, same as if you just got a new hardware wallet. That way you can
-        be sure your keys never leave your device.
+        SelfCrypto, same as if you just got a new hardware wallet. That way you
+        can be sure your keys never leave your device.
       </p>
       <p>
-        If you want to access funds in one of your existing wallets via Enkrypt,
-        the most secure way is to create a new wallet and transfer your ETH and
-        Tokens to the new wallet.
+        If you want to access funds in one of your existing wallets via
+        SelfCrypto, the most secure way is to create a new wallet and transfer
+        your ETH and Tokens to the new wallet.
       </p>
       <p>Using your existing private key considerably reduces your security.</p>
     </custom-scrollbar>
   </div>
 </template>
 <script setup lang="ts">
-import CustomScrollbar from "@action/components/custom-scrollbar/index.vue";
-import scrollSettings from "@/libs/utils/scroll-settings";
+import CustomScrollbar from '@action/components/custom-scrollbar/index.vue'
+import scrollSettings from '@/libs/utils/scroll-settings'
 </script>
 
 <style lang="less">
-@import "~@action/styles/theme.less";
+@import '~@action/styles/theme.less';
 
 .restore-wallet-other-info {
   h3 {
@@ -60,7 +60,7 @@ import scrollSettings from "@/libs/utils/scroll-settings";
   &__scroll-area {
     position: relative;
     margin: auto;
-    width: calc(~"100% + 15px");
+    width: calc(~'100% + 15px');
     max-height: 488px;
     padding-right: 15px;
     box-sizing: border-box;

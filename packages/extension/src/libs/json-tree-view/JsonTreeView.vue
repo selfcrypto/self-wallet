@@ -9,24 +9,24 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import JsonTreeViewItem from "./JsonTreeViewItem.vue";
-import { ItemType, type ValueTypes, type ItemData } from "./types";
+import { computed } from 'vue'
+import JsonTreeViewItem from './JsonTreeViewItem.vue'
+import { ItemType, type ValueTypes, type ItemData } from './types'
 
 const props = defineProps({
   rootKeyString: {
     type: String,
-    default: "Sign typed data",
+    default: 'Sign typed data',
   },
   data: {
     type: String,
     required: false,
-    default: "{}",
+    default: '{}',
   },
   rootKey: {
     type: String,
     required: false,
-    default: "/",
+    default: '/',
   },
   maxDepth: {
     type: Number,
@@ -36,17 +36,17 @@ const props = defineProps({
   colorScheme: {
     type: String,
     required: false,
-    default: "light",
-    validator: (value: string) => ["light", "dark"].indexOf(value) !== -1,
+    default: 'light',
+    validator: (value: string) => ['light', 'dark'].indexOf(value) !== -1,
   },
-});
+})
 
 const emit = defineEmits<{
-  (e: "selected", data: unknown): void;
-}>();
+  (e: 'selected', data: unknown): void
+}>()
 
 function itemSelected(data: unknown): void {
-  emit("selected", data);
+  emit('selected', data)
 }
 
 function build(
@@ -66,7 +66,7 @@ function build(
           includeKey ? `${path}${key}[${index}].` : `${path}`,
           false
         )
-      );
+      )
       return {
         key,
         type: ItemType.ARRAY,
@@ -74,7 +74,7 @@ function build(
         path,
         length: children.length,
         children,
-      };
+      }
     }
 
     const children = Object.entries(value).map(([childKey, childValue]) =>
@@ -85,7 +85,7 @@ function build(
         includeKey ? `${path}${key}.` : `${path}`,
         true
       )
-    );
+    )
     return {
       key,
       type: ItemType.OBJECT,
@@ -93,7 +93,7 @@ function build(
       path,
       length: children.length,
       children: children,
-    };
+    }
   } else {
     return {
       key,
@@ -101,26 +101,26 @@ function build(
       path: includeKey ? `${path}${key}` : path.slice(0, -1),
       depth,
       value,
-    };
+    }
   }
 }
 
 const parsed = computed((): ItemData => {
-  const json = props.data;
+  const json = props.data
   if (json != null && json != undefined) {
-    const data = JSON.parse(json);
+    const data = JSON.parse(json)
     if (data instanceof Object) {
-      return build(props.rootKey, { ...data }, 0, "", true);
+      return build(props.rootKey, { ...data }, 0, '', true)
     }
   }
   return {
     key: props.rootKey,
     type: ItemType.VALUE,
-    path: "",
+    path: '',
     depth: 0,
     value: props.data,
-  };
-});
+  }
+})
 </script>
 
 <style lang="less" scoped>

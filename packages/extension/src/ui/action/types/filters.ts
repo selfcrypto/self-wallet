@@ -4,7 +4,7 @@ import {
   replaceWithEllipsis,
   formatFiatValue,
   formatFloatingPointValue,
-} from "../utils/filters";
+} from '../utils/filters'
 declare global {
   namespace $filters {
     export {
@@ -12,6 +12,6 @@ declare global {
       replaceWithEllipsis,
       formatFiatValue,
       formatFloatingPointValue,
-    };
+    }
   }
 }

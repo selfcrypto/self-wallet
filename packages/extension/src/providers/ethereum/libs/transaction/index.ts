@@ -1,4 +1,4 @@
-import Web3Eth, { FeeHistoryResult } from "web3-eth";
+import Web3Eth, { FeeHistoryResult } from 'web3-eth'
 import {
   EthereumTransaction,
   FinalizedFeeMarketEthereumTransaction,
@@ -6,34 +6,34 @@ import {
   FormattedFeeHistory,
   GasCosts,
   TransactionOptions,
-} from "./types";
-import { GasPriceTypes } from "@/providers/common/types";
-import { numberToHex, toBN } from "web3-utils";
+} from './types'
+import { GasPriceTypes } from '@/providers/common/types'
+import { numberToHex, toBN } from 'web3-utils'
 import {
   GAS_PERCENTILES,
   formatFeeHistory,
   getBaseFeeBasedOnType,
   getGasBasedOnType,
   getPriorityFeeBasedOnType,
-} from "./gas-utils";
-import { Hardfork, Common } from "@ethereumjs/common";
-import { FeeMarketEIP1559Transaction, LegacyTransaction } from "@ethereumjs/tx";
+} from './gas-utils'
+import { Hardfork, Common } from '@ethereumjs/common'
+import { FeeMarketEIP1559Transaction, LegacyTransaction } from '@ethereumjs/tx'
 
 class Transaction {
-  tx: EthereumTransaction;
-  web3: Web3Eth;
+  tx: EthereumTransaction
+  web3: Web3Eth
   constructor(tx: EthereumTransaction, web3: Web3Eth) {
-    this.tx = tx;
-    if (this.tx.gas) this.tx.gasLimit = this.tx.gas;
-    this.web3 = web3;
+    this.tx = tx
+    if (this.tx.gas) this.tx.gasLimit = this.tx.gas
+    this.web3 = web3
   }
   async estimateGas(): Promise<number> {
     return this.web3.estimateGas({
       to: this.tx.to || undefined,
       from: this.tx.from,
-      data: this.tx.data || "0x",
-      value: this.tx.value || "0x0",
-    });
+      data: this.tx.data || '0x',
+      value: this.tx.value || '0x0',
+    })
   }
   private getFeeMarketGasInfo = (
     baseFeePerGas: string,
@@ -43,32 +43,32 @@ class Transaction {
     const adjustedBaseFeePerGas = getBaseFeeBasedOnType(
       baseFeePerGas,
       priceType
-    );
+    )
     const maxPriorityFeePerGas = getPriorityFeeBasedOnType(
       formattedFeeHistory,
       priceType
-    );
-    const maxFeePerGas = adjustedBaseFeePerGas.add(maxPriorityFeePerGas);
+    )
+    const maxFeePerGas = adjustedBaseFeePerGas.add(maxPriorityFeePerGas)
     return {
       adjustedBaseFeePerGas,
       maxPriorityFeePerGas,
       maxFeePerGas,
-    };
-  };
+    }
+  }
   async finalizeTransaction(options: TransactionOptions): Promise<{
     transaction:
       | FinalizedFeeMarketEthereumTransaction
-      | FinalizedLegacyEthereumTransaction;
-    gasPrice?: string;
-    baseFeePerGas?: string;
-    maxPriorityFeePerGas?: string;
-    maxFeePerGas?: string;
-    gasLimit: string;
-    formattedFeeHistory?: FormattedFeeHistory;
+      | FinalizedLegacyEthereumTransaction
+    gasPrice?: string
+    baseFeePerGas?: string
+    maxPriorityFeePerGas?: string
+    maxFeePerGas?: string
+    gasLimit: string
+    formattedFeeHistory?: FormattedFeeHistory
   }> {
-    const latestBlock = await this.web3.getBlock("latest", false);
+    const latestBlock = await this.web3.getBlock('latest', false)
     const { isFeeMarketNetwork, feeHistory } = await this.web3
-      .getFeeHistory(6, "latest", GAS_PERCENTILES)
+      .getFeeHistory(6, 'latest', GAS_PERCENTILES)
       .then((history) => ({
         isFeeMarketNetwork: !!latestBlock.baseFeePerGas,
         feeHistory: history,
@@ -76,17 +76,17 @@ class Transaction {
       .catch(() => ({
         isFeeMarketNetwork: false,
         feeHistory: {} as FeeHistoryResult,
-      }));
-    const nonce = await this.web3.getTransactionCount(this.tx.from, "pending");
+      }))
+    const nonce = await this.web3.getTransactionCount(this.tx.from, 'pending')
     if (!isFeeMarketNetwork) {
-      const gasPrice = await this.web3.getGasPrice();
+      const gasPrice = await this.web3.getGasPrice()
       const gasLimit =
         this.tx.gasLimit ||
-        (numberToHex(await this.estimateGas()) as `0x${string}`);
+        (numberToHex(await this.estimateGas()) as `0x${string}`)
       const legacyTx: FinalizedLegacyEthereumTransaction = {
         to: this.tx.to || undefined,
         chainId: this.tx.chainId,
-        data: this.tx.data || "0x",
+        data: this.tx.data || '0x',
         from: this.tx.from,
         gasLimit,
         gasPrice: !options.totalGasPrice
@@ -97,46 +97,46 @@ class Transaction {
               options.totalGasPrice.div(toBN(gasLimit))
             ) as `0x${string}`),
         nonce: this.tx.nonce || (numberToHex(nonce) as `0x${string}`),
-        value: this.tx.value || "0x0",
-      };
+        value: this.tx.value || '0x0',
+      }
       return {
         transaction: legacyTx,
         gasPrice: gasPrice,
         gasLimit: legacyTx.gasLimit,
-      };
+      }
     } else {
       const baseFeePerGas =
-        feeHistory.baseFeePerGas[feeHistory.baseFeePerGas.length - 2]; // -2 since -1 is the pending block
-      const formattedFeeHistory = formatFeeHistory(feeHistory);
+        feeHistory.baseFeePerGas[feeHistory.baseFeePerGas.length - 2] // -2 since -1 is the pending block
+      const formattedFeeHistory = formatFeeHistory(feeHistory)
       const feeMarket = this.getFeeMarketGasInfo(
         baseFeePerGas!,
         formattedFeeHistory,
         options.gasPriceType
-      );
+      )
       const gasLimit =
         this.tx.gasLimit ||
-        (numberToHex(await this.estimateGas()) as `0x${string}`);
+        (numberToHex(await this.estimateGas()) as `0x${string}`)
       const maxFeePerGas = !options.totalGasPrice
         ? feeMarket.maxFeePerGas
-        : options.totalGasPrice.div(toBN(gasLimit));
-      const maxPriorityFeePerGas = feeMarket.maxPriorityFeePerGas;
+        : options.totalGasPrice.div(toBN(gasLimit))
+      const maxPriorityFeePerGas = feeMarket.maxPriorityFeePerGas
       const feeMarketTx: FinalizedFeeMarketEthereumTransaction = {
         to: this.tx.to || undefined,
         chainId: this.tx.chainId,
-        data: this.tx.data || "0x",
+        data: this.tx.data || '0x',
         from: this.tx.from,
         gasLimit,
         nonce: this.tx.nonce || (numberToHex(nonce) as `0x${string}`),
-        value: this.tx.value || "0x0",
+        value: this.tx.value || '0x0',
         maxFeePerGas: numberToHex(maxFeePerGas) as `0x${string}`,
         maxPriorityFeePerGas: numberToHex(
           maxPriorityFeePerGas.gt(maxFeePerGas)
             ? maxFeePerGas
             : maxPriorityFeePerGas
         ) as `0x${string}`,
-        type: "0x02",
+        type: '0x02',
         accessList: this.tx.accessList || [],
-      };
+      }
       return {
         transaction: feeMarketTx,
         gasLimit: feeMarketTx.gasLimit,
@@ -144,46 +144,46 @@ class Transaction {
         maxFeePerGas: numberToHex(feeMarket.maxFeePerGas),
         maxPriorityFeePerGas: numberToHex(feeMarket.maxPriorityFeePerGas),
         formattedFeeHistory,
-      };
+      }
     }
   }
   async getFinalizedTransaction(
     options: TransactionOptions
   ): Promise<LegacyTransaction | FeeMarketEIP1559Transaction> {
-    const { transaction } = await this.finalizeTransaction(options);
+    const { transaction } = await this.finalizeTransaction(options)
 
     if (!transaction.maxFeePerGas) {
       const common = Common.custom({
         chainId: BigInt(transaction.chainId),
-      });
+      })
       return LegacyTransaction.fromTxData(
         transaction as FinalizedLegacyEthereumTransaction,
         {
           common,
         }
-      );
+      )
     } else {
       const common = Common.custom({
         chainId: BigInt(transaction.chainId),
         defaultHardfork: Hardfork.London,
-      });
+      })
       return FeeMarketEIP1559Transaction.fromTxData(
         transaction as FinalizedFeeMarketEthereumTransaction,
         {
           common,
         }
-      );
+      )
     }
   }
   async getMessageToSign(options: TransactionOptions): Promise<Uint8Array> {
-    const tx = await this.getFinalizedTransaction(options);
-    return tx.getHashedMessageToSign();
+    const tx = await this.getFinalizedTransaction(options)
+    return tx.getHashedMessageToSign()
   }
   async getGasCosts(): Promise<GasCosts> {
     const { gasLimit, gasPrice, baseFeePerGas, formattedFeeHistory } =
       await this.finalizeTransaction({
         gasPriceType: GasPriceTypes.ECONOMY,
-      });
+      })
     if (gasPrice) {
       return {
         [GasPriceTypes.ECONOMY]: numberToHex(
@@ -198,7 +198,7 @@ class Transaction {
         [GasPriceTypes.FASTEST]: numberToHex(
           getGasBasedOnType(gasPrice, GasPriceTypes.FASTEST).mul(toBN(gasLimit))
         ),
-      };
+      }
     } else {
       return {
         [GasPriceTypes.ECONOMY]: numberToHex(
@@ -229,9 +229,9 @@ class Transaction {
             GasPriceTypes.FASTEST
           ).maxFeePerGas.mul(toBN(gasLimit))
         ),
-      };
+      }
     }
   }
 }
 
-export default Transaction;
+export default Transaction

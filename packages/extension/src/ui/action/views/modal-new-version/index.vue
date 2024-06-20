@@ -3,7 +3,7 @@
     <div class="rate__overlay" @click="close" />
     <div class="rate__wrap">
       <div class="rate__header">
-        <h2>New Enkrypt version available</h2>
+        <h2>New SelfCrypto version available</h2>
         <a class="rate__close" @click="close">
           <close-icon />
         </a>
@@ -21,31 +21,31 @@
 </template>
 
 <script setup lang="ts">
-import CloseIcon from "@action/icons/common/close-icon.vue";
-import BaseButton from "@action/components/base-button/index.vue";
-import { openLink } from "@action/utils/browser";
+import CloseIcon from '@action/icons/common/close-icon.vue'
+import BaseButton from '@action/components/base-button/index.vue'
+import { openLink } from '@action/utils/browser'
 
 const emit = defineEmits<{
-  (e: "close:popup"): void;
-}>();
+  (e: 'close:popup'): void
+}>()
 const close = async () => {
-  emit("close:popup");
-};
-
-interface IProps {
-  currentVersion: string;
-  latestVersion: string;
+  emit('close:popup')
 }
 
-defineProps<IProps>();
+interface IProps {
+  currentVersion: string
+  latestVersion: string
+}
+
+defineProps<IProps>()
 
 const update = async () => {
-  openLink("https://www.enkrypt.com");
-};
+  openLink('https://www.enkrypt.com')
+}
 </script>
 
 <style lang="less">
-@import "~@action/styles/theme.less";
+@import '~@action/styles/theme.less';
 
 .rate {
   width: 100%;

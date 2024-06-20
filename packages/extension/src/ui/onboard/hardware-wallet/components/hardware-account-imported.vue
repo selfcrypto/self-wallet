@@ -2,15 +2,15 @@
   <div class="hardware-account-imported">
     <import-done-animation />
     <h3>Accounts imported</h3>
-    <p>Now you can close this tab and open Enkrypt.</p>
+    <p>Now you can close this tab and open SelfCrypto.</p>
   </div>
 </template>
 <script setup lang="ts">
-import ImportDoneAnimation from "@action/icons/import/import-done-animation.vue";
+import ImportDoneAnimation from '@action/icons/import/import-done-animation.vue'
 </script>
 
 <style lang="less" scoped>
-@import "~@action/styles/theme.less";
+@import '~@action/styles/theme.less';
 
 .hardware-account-imported {
   width: 100%;

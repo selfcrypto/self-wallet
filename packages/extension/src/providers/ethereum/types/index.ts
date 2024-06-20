@@ -1,39 +1,39 @@
-import type { Provider as InjectedProvider } from "../inject";
-import { ProviderError, SignerType } from "@enkryptcom/types";
-import { EnkryptProviderEventMethods, NodeType } from "@/types/provider";
+import type { Provider as InjectedProvider } from '../inject'
+import { ProviderError, SignerType } from '@enkryptcom/types'
+import { EnkryptProviderEventMethods, NodeType } from '@/types/provider'
 export interface ProviderMessage {
-  method: MessageMethod | EnkryptProviderEventMethods;
-  params: Array<any>;
+  method: MessageMethod | EnkryptProviderEventMethods
+  params: Array<any>
 }
 export enum MessageMethod {
-  changeChainId = "changeChainId",
-  changeAddress = "changeAddress",
-  changeConnected = "changeConnected",
-  subscription = "eth_subscription",
+  changeChainId = 'changeChainId',
+  changeAddress = 'changeAddress',
+  changeConnected = 'changeConnected',
+  subscription = 'eth_subscription',
 }
 
 export enum EmitEvent {
-  accountsChanged = "accountsChanged",
-  chainChanged = "chainChanged",
-  networkChanged = "networkChanged",
-  connect = "connect",
-  disconnect = "disconnect",
-  message = "message",
+  accountsChanged = 'accountsChanged',
+  chainChanged = 'chainChanged',
+  networkChanged = 'networkChanged',
+  connect = 'connect',
+  disconnect = 'disconnect',
+  message = 'message',
 }
 
 export interface JSONError {
-  error: ProviderError;
+  error: ProviderError
 }
 
 export interface EthereumResponse {
-  result?: any;
-  error?: ProviderError;
+  result?: any
+  error?: ProviderError
 }
 
 export type CallbackFunction = (
   err: Error | null,
   res?: JsonRpcResponse
-) => void;
+) => void
 
 export enum ErrorCodes {
   userRejected = 4001,
@@ -44,34 +44,34 @@ export enum ErrorCodes {
 }
 
 export interface ProviderConnectInfo {
-  readonly chainId: string;
+  readonly chainId: string
 }
 export interface EthereumRequest {
-  method: string;
-  params?: Array<any>;
+  method: string
+  params?: Array<any>
 }
 
 export interface EthereumNodeType extends NodeType {
-  signer: [SignerType.secp256k1];
-  chainID: `0x${string}`;
+  signer: [SignerType.secp256k1]
+  chainID: `0x${string}`
 }
 
 export interface ERC20TokenInfo {
-  name: string;
-  symbol: string;
-  decimals: number;
+  name: string
+  symbol: string
+  decimals: number
 }
 export interface JsonRpcRequest {
-  id: string;
-  jsonrpc: "2.0";
-  method: string;
-  params?: any[];
+  id: string
+  jsonrpc: '2.0'
+  method: string
+  params?: any[]
 }
 
 export interface JsonRpcResponse {
-  id: string;
-  jsonrpc: "2.0";
-  result?: unknown;
-  error?: Error;
+  id: string
+  jsonrpc: '2.0'
+  result?: unknown
+  error?: Error
 }
-export { InjectedProvider };
+export { InjectedProvider }

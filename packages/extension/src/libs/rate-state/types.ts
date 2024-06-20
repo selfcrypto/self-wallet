@@ -1,10 +1,10 @@
 export enum StorageKeys {
-  rateInfo = "rate-info",
+  rateInfo = 'rate-info',
 }
 
 export interface Rate {
-  alreadyRated: boolean;
-  popupTime: number;
+  alreadyRated: boolean
+  popupTime: number
 }
 
-export type IState = Rate;
+export type IState = Rate

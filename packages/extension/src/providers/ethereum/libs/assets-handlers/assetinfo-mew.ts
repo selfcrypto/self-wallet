@@ -1,174 +1,172 @@
-import { AssetsType } from "@/types/provider";
+import { AssetsType } from '@/types/provider'
 import {
   CGToken,
   SupportedNetwork,
   SupportedNetworkNames,
   TokenBalance,
-} from "./types/tokenbalance-mew";
-import MarketData from "@/libs/market-data";
-import { fromBase } from "@enkryptcom/utils";
-import { toBN } from "web3-utils";
-import BigNumber from "bignumber.js";
+} from './types/tokenbalance-mew'
+import MarketData from '@/libs/market-data'
+import { fromBase } from '@enkryptcom/utils'
+import { toBN } from 'web3-utils'
+import BigNumber from 'bignumber.js'
 import {
   formatFiatValue,
   formatFloatingPointValue,
-} from "@/libs/utils/number-formatter";
-import API from "@/providers/ethereum/libs/api";
-import Sparkline from "@/libs/sparkline";
-import { BaseNetwork } from "@/types/base-network";
-import { EvmNetwork } from "../../types/evm-network";
-import { getKnownNetworkTokens } from "./token-lists";
-import { CoingeckoPlatform, NetworkNames } from "@enkryptcom/types";
-import { NATIVE_TOKEN_ADDRESS } from "../common";
-import getTomoBalances from "./tomochain";
-import { CoinGeckoTokenMarket } from "@/libs/market-data/types";
+} from '@/libs/utils/number-formatter'
+import API from '@/providers/ethereum/libs/api'
+import Sparkline from '@/libs/sparkline'
+import { BaseNetwork } from '@/types/base-network'
+import { EvmNetwork } from '../../types/evm-network'
+import { getKnownNetworkTokens } from './token-lists'
+import { CoingeckoPlatform, NetworkNames } from '@enkryptcom/types'
+import { NATIVE_TOKEN_ADDRESS } from '../common'
+import getTomoBalances from './tomochain'
+import { CoinGeckoTokenMarket } from '@/libs/market-data/types'
 
-const API_ENPOINT = "https://tokenbalance.mewapi.io/";
-const API_ENPOINT2 = "https://partners.mewapi.io/balances/";
+const API_ENPOINT = 'https://tokenbalance.mewapi.io/'
+const API_ENPOINT2 = 'https://partners.mewapi.io/balances/'
 
 const supportedNetworks: Record<SupportedNetworkNames, SupportedNetwork> = {
   [NetworkNames.Binance]: {
-    tbName: "bsc",
+    tbName: 'bsc',
     cgPlatform: CoingeckoPlatform.Binance,
   },
   [NetworkNames.Ethereum]: {
-    tbName: "eth",
+    tbName: 'eth',
     cgPlatform: CoingeckoPlatform.Ethereum,
   },
   [NetworkNames.Matic]: {
-    tbName: "matic",
+    tbName: 'matic',
     cgPlatform: CoingeckoPlatform.Matic,
   },
   [NetworkNames.AstarEVM]: {
-    tbName: "astar",
+    tbName: 'astar',
     cgPlatform: CoingeckoPlatform.Astar,
   },
   [NetworkNames.Okc]: {
-    tbName: "okt",
+    tbName: 'okt',
     cgPlatform: CoingeckoPlatform.Okc,
   },
   [NetworkNames.Optimism]: {
-    tbName: "op",
+    tbName: 'op',
     cgPlatform: CoingeckoPlatform.Optimism,
   },
   [NetworkNames.Moonriver]: {
-    tbName: "movr",
+    tbName: 'movr',
     cgPlatform: CoingeckoPlatform.Moonriver,
   },
   [NetworkNames.Moonbeam]: {
-    tbName: "mobm",
+    tbName: 'mobm',
     cgPlatform: CoingeckoPlatform.Moonbeam,
   },
   [NetworkNames.ShidenEVM]: {
-    tbName: "sdn",
+    tbName: 'sdn',
     cgPlatform: CoingeckoPlatform.Shiden,
   },
   [NetworkNames.Canto]: {
-    tbName: "canto",
+    tbName: 'canto',
     cgPlatform: CoingeckoPlatform.Canto,
   },
   [NetworkNames.Rootstock]: {
-    tbName: "rsk",
+    tbName: 'rsk',
     cgPlatform: CoingeckoPlatform.Rootstock,
   },
   [NetworkNames.Arbitrum]: {
-    tbName: "arb",
+    tbName: 'arb',
     cgPlatform: CoingeckoPlatform.Arbitrum,
   },
   [NetworkNames.Gnosis]: {
-    tbName: "xdai",
+    tbName: 'xdai',
     cgPlatform: CoingeckoPlatform.Gnosis,
   },
   [NetworkNames.Avalanche]: {
-    tbName: "avax",
+    tbName: 'avax',
     cgPlatform: CoingeckoPlatform.Avalanche,
   },
   [NetworkNames.Fantom]: {
-    tbName: "ftm",
+    tbName: 'ftm',
     cgPlatform: CoingeckoPlatform.Fantom,
   },
   [NetworkNames.Klaytn]: {
-    tbName: "klay",
+    tbName: 'klay',
     cgPlatform: CoingeckoPlatform.Klaytn,
   },
   [NetworkNames.Aurora]: {
-    tbName: "aurora",
+    tbName: 'aurora',
     cgPlatform: CoingeckoPlatform.Aurora,
   },
   [NetworkNames.ZkSync]: {
-    tbName: "era",
+    tbName: 'era',
     cgPlatform: CoingeckoPlatform.Zksync,
   },
   [NetworkNames.MaticZK]: {
-    tbName: "pze",
+    tbName: 'pze',
     cgPlatform: CoingeckoPlatform.MaticZK,
   },
   [NetworkNames.Celo]: {
-    tbName: "celo",
+    tbName: 'celo',
     cgPlatform: CoingeckoPlatform.Celo,
   },
   [NetworkNames.TomoChain]: {
-    tbName: "",
+    tbName: '',
     cgPlatform: CoingeckoPlatform.TomoChain,
   },
   [NetworkNames.Shibarium]: {
-    tbName: "shib",
+    tbName: 'shib',
     cgPlatform: CoingeckoPlatform.Shibarium,
   },
   [NetworkNames.Rollux]: {
-    tbName: "rollux",
+    tbName: 'rollux',
     cgPlatform: CoingeckoPlatform.Rollux,
   },
-};
+}
 
 const getTokens = (
   chain: SupportedNetworkNames,
   address: string
 ): Promise<TokenBalance[]> => {
   if (chain === NetworkNames.TomoChain) {
-    return getTomoBalances(chain, address);
+    return getTomoBalances(chain, address)
   }
-  let url = "";
+  let url = ''
   if (chain === NetworkNames.Ethereum || chain === NetworkNames.Binance)
-    url = `${API_ENPOINT}${supportedNetworks[chain].tbName}?address=${address}&platform=enkrypt&type=internal`;
+    url = `${API_ENPOINT}${supportedNetworks[chain].tbName}?address=${address}&platform=enkrypt&type=internal`
   else
-    url = `${API_ENPOINT2}${supportedNetworks[chain].tbName}/${address}?platform=enkrypt&type=internal`;
+    url = `${API_ENPOINT2}${supportedNetworks[chain].tbName}/${address}?platform=enkrypt&type=internal`
   return fetch(url)
     .then((res) => res.json())
     .then((json) => {
       if (json.error)
-        return Promise.reject(
-          `TOKENBALANCE-MEW: ${JSON.stringify(json.error)}`
-        );
+        return Promise.reject(`TOKENBALANCE-MEW: ${JSON.stringify(json.error)}`)
       else {
         const isNativeAvailable = json.result.length
           ? json.result.find((i: any) => i.contract === NATIVE_TOKEN_ADDRESS)
-          : false;
+          : false
         if (!json.result.length || !isNativeAvailable) {
           json.result.push({
             contract: NATIVE_TOKEN_ADDRESS,
-            balance: "0x0",
-          });
+            balance: '0x0',
+          })
         }
-        return json.result as TokenBalance[];
+        return json.result as TokenBalance[]
       }
-    });
-};
+    })
+}
 
 export default (
   network: BaseNetwork,
   address: string
 ): Promise<AssetsType[]> => {
   if (!Object.keys(supportedNetworks).includes(network.name))
-    throw new Error("TOKENBALANCE-MEW: network not supported");
-  const networkName = network.name as SupportedNetworkNames;
+    throw new Error('TOKENBALANCE-MEW: network not supported')
+  const networkName = network.name as SupportedNetworkNames
   return getTokens(networkName, address).then(async (tokens) => {
     const balances: Record<string, TokenBalance> = tokens.reduce(
       (obj, cur) => ({ ...obj, [cur.contract]: cur }),
       {}
-    );
+    )
 
-    const marketData = new MarketData();
+    const marketData = new MarketData()
 
     const marketInfo = supportedNetworks[networkName].cgPlatform
       ? await marketData.getMarketInfoByContracts(
@@ -180,15 +178,13 @@ export default (
       : tokens.reduce(
           (obj, cur) => ({ ...obj, [cur.contract]: null }),
           {} as Record<string, CoinGeckoTokenMarket | null>
-        );
+        )
     if (network.coingeckoID) {
-      const nativeMarket = await marketData.getMarketData([
-        network.coingeckoID,
-      ]);
-      marketInfo[NATIVE_TOKEN_ADDRESS] = nativeMarket[0];
+      const nativeMarket = await marketData.getMarketData([network.coingeckoID])
+      marketInfo[NATIVE_TOKEN_ADDRESS] = nativeMarket[0]
     } else {
       marketInfo[NATIVE_TOKEN_ADDRESS] = {
-        id: "",
+        id: '',
         symbol: network.currencyName,
         name: network.name_long,
         image: network.icon,
@@ -201,13 +197,13 @@ export default (
         price_change_percentage_24h: 0,
         sparkline_in_7d: { price: [] },
         price_change_percentage_7d_in_currency: 0,
-      };
+      }
     }
 
-    const assets: AssetsType[] = [];
+    const assets: AssetsType[] = []
     const tokenInfo: Record<string, CGToken> = await getKnownNetworkTokens(
       network.name
-    );
+    )
 
     tokenInfo[NATIVE_TOKEN_ADDRESS] = {
       chainId: (network as EvmNetwork).chainID,
@@ -216,19 +212,19 @@ export default (
       address: NATIVE_TOKEN_ADDRESS,
       logoURI: network.icon,
       symbol: network.currencyName,
-    };
+    }
 
-    const unknownTokens: string[] = [];
-    let nativeAsset: AssetsType | null = null;
+    const unknownTokens: string[] = []
+    let nativeAsset: AssetsType | null = null
     for (const [address, market] of Object.entries(marketInfo)) {
       if (market && tokenInfo[address]) {
         const userBalance = fromBase(
           balances[address].balance,
           tokenInfo[address].decimals
-        );
+        )
         const usdBalance = new BigNumber(userBalance).times(
           market.current_price
-        );
+        )
         const asset: AssetsType = {
           balance: toBN(balances[address].balance).toString(),
           balancef: formatFloatingPointValue(userBalance).value,
@@ -244,49 +240,49 @@ export default (
           sparkline: new Sparkline(market.sparkline_in_7d.price, 25).dataValues,
           priceChangePercentage:
             market.price_change_percentage_7d_in_currency || 0,
-        };
-        if (address !== NATIVE_TOKEN_ADDRESS) assets.push(asset);
-        else nativeAsset = asset;
+        }
+        if (address !== NATIVE_TOKEN_ADDRESS) assets.push(asset)
+        else nativeAsset = asset
       } else {
-        unknownTokens.push(address);
+        unknownTokens.push(address)
       }
     }
 
     assets.sort((a, b) => {
-      if (a.balanceUSD < b.balanceUSD) return 1;
-      else if (a.balanceUSD > b.balanceUSD) return -1;
-      else return 0;
-    });
-    assets.unshift(nativeAsset as AssetsType);
+      if (a.balanceUSD < b.balanceUSD) return 1
+      else if (a.balanceUSD > b.balanceUSD) return -1
+      else return 0
+    })
+    assets.unshift(nativeAsset as AssetsType)
     if (unknownTokens.length && network.api) {
-      const api = (await network.api()) as API;
-      const promises = unknownTokens.map((t) => api.getTokenInfo(t));
+      const api = (await network.api()) as API
+      const promises = unknownTokens.map((t) => api.getTokenInfo(t))
       await Promise.all(promises).then((tokenMeta) => {
         tokenMeta.forEach((tInfo, idx) => {
           const userBalance = fromBase(
             balances[unknownTokens[idx]].balance,
             tInfo.decimals
-          );
+          )
           const asset: AssetsType = {
             balance: toBN(balances[unknownTokens[idx]].balance).toString(),
             balancef: formatFloatingPointValue(userBalance).value,
             balanceUSD: 0,
-            balanceUSDf: formatFiatValue("0").value,
+            balanceUSDf: formatFiatValue('0').value,
             icon: tokenInfo[unknownTokens[idx]]?.logoURI || network.icon,
             name: tInfo.name,
             symbol: tInfo.symbol,
-            value: "0",
-            valuef: formatFiatValue("0").value,
+            value: '0',
+            valuef: formatFiatValue('0').value,
             contract: unknownTokens[idx],
             decimals: tInfo.decimals,
-            sparkline: "",
+            sparkline: '',
             priceChangePercentage: 0,
-          };
-          assets.push(asset);
-        });
-      });
+          }
+          assets.push(asset)
+        })
+      })
     }
 
-    return assets;
-  });
-};
+    return assets
+  })
+}

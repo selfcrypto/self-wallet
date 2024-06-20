@@ -1,59 +1,59 @@
-import browser from "webextension-polyfill";
-import { keccak256 } from "ethereum-cryptography/keccak";
-import { bufferToHex } from "@enkryptcom/utils";
+import browser from 'webextension-polyfill'
+import { keccak256 } from 'ethereum-cryptography/keccak'
+import { bufferToHex } from '@enkryptcom/utils'
 const filesToMonitor = {
   content: {
-    path: "scripts/contentscript.js",
-    hash: "",
+    path: 'scripts/contentscript.js',
+    hash: '',
   },
   inject: {
-    path: "scripts/inject.js",
-    hash: "",
+    path: 'scripts/inject.js',
+    hash: '',
   },
   background: {
-    path: "scripts/background.js",
-    hash: "",
+    path: 'scripts/background.js',
+    hash: '',
   },
   action: {
-    path: "action.html",
-    hash: "",
+    path: 'action.html',
+    hash: '',
   },
   index: {
-    path: "index.html",
-    hash: "",
+    path: 'index.html',
+    hash: '',
   },
   manifest: {
-    path: "manifest.json",
-    hash: "",
+    path: 'manifest.json',
+    hash: '',
   },
-};
+}
 const checkFilesChanged = async () => {
-  let filesChanged = false;
+  let filesChanged = false
   for (const value of Object.values(filesToMonitor)) {
-    const exturl = browser.runtime.getURL(value.path);
+    const exturl = browser.runtime.getURL(value.path)
     await fetch(exturl)
       .then((res) => res.text())
       .then((content) => {
-        const hash = bufferToHex(keccak256(Buffer.from(content)));
+        const hash = bufferToHex(keccak256(Buffer.from(content)))
         if (value.hash !== hash) {
-          filesChanged = true;
-          value.hash = hash;
+          filesChanged = true
+          value.hash = hash
         }
-      });
+      })
   }
-  return filesChanged;
-};
+  return filesChanged
+}
 const watchChanges = async () => {
-  await checkFilesChanged();
+  await checkFilesChanged()
   setInterval(async () => {
-    const filesChanged = await checkFilesChanged();
+    const filesChanged = await checkFilesChanged()
     if (filesChanged) {
-      browser.runtime.reload();
+      browser.runtime.reload()
     }
-  }, 2000);
-};
+  }, 2000)
+}
 browser.management.getSelf().then((self) => {
-  if (self.installType === "development") {
-    watchChanges();
+  if (self.installType === 'development') {
+    watchChanges()
   }
-});
+})

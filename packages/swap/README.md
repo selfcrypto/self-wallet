@@ -1,3 +1,3 @@
 # @enkryptcom/swap
 
-## Swap library for Enkrypt
+## Swap library for SelfCrypto

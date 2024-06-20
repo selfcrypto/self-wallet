@@ -1,15 +1,15 @@
-import { GasPriceTypes } from "@/providers/common/types";
+import { GasPriceTypes } from '@/providers/common/types'
 
 interface FeeType {
   fast: {
-    satsPerKiloByte: number;
-  };
+    satsPerKiloByte: number
+  }
   average: {
-    satsPerKiloByte: number;
-  };
+    satsPerKiloByte: number
+  }
   slow: {
-    satsPerKiloByte: number;
-  };
+    satsPerKiloByte: number
+  }
 }
 const SSFeeHandler = async (
   url: string
@@ -18,9 +18,9 @@ const SSFeeHandler = async (
     .then((res) => res.json())
     .then((json: FeeType) => {
       if (json.fast.satsPerKiloByte < 0)
-        json.fast.satsPerKiloByte = json.average.satsPerKiloByte;
+        json.fast.satsPerKiloByte = json.average.satsPerKiloByte
       if (json.average.satsPerKiloByte < 0)
-        json.average.satsPerKiloByte = json.slow.satsPerKiloByte;
+        json.average.satsPerKiloByte = json.slow.satsPerKiloByte
       return {
         [GasPriceTypes.FASTEST]:
           Math.ceil(json.fast.satsPerKiloByte / 1024) + 5,
@@ -28,8 +28,8 @@ const SSFeeHandler = async (
         [GasPriceTypes.REGULAR]:
           Math.ceil(json.average.satsPerKiloByte / 1024) + 2,
         [GasPriceTypes.ECONOMY]: Math.ceil(json.slow.satsPerKiloByte / 1024),
-      };
-    });
-};
+      }
+    })
+}
 
-export default SSFeeHandler;
+export default SSFeeHandler

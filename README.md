@@ -4,7 +4,7 @@
     <img src="enkrypt.png" alt="Logo">
   </a>
 
-  <h3 align="center">Enkrypt</h3>
+  <h3 align="center">SelfCrypto</h3>
 
   <p align="center">
     Everything in the blockchain made easy
@@ -23,9 +23,9 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## About Enkrypt
+## About SelfCrypto
 
-Enkrypt is a web3 wallet built from the ground up to support the multi-chain future. Send, receive, swap, manage your tokens and NFTs, and interact with dapps on all of your favorite chains with just a few clicks. With only one seed phrase for all of your accounts Enkrypt makes it easy to manage your assets and stay secure. If you're looking for that extra layer of security Enkrypt also supports popular hardware wallets such as Ledger and Trezor.
+SelfCrypto is a web3 wallet built from the ground up to support the multi-chain future. Send, receive, swap, manage your tokens and NFTs, and interact with dapps on all of your favorite chains with just a few clicks. With only one seed phrase for all of your accounts SelfCrypto makes it easy to manage your assets and stay secure. If you're looking for that extra layer of security SelfCrypto also supports popular hardware wallets such as Ledger and Trezor.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

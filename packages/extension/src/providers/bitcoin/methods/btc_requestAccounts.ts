@@ -1,54 +1,54 @@
-import { CallbackFunction, MiddlewareFunction } from "@enkryptcom/types";
-import type BitcoinProvider from "..";
-import { ProviderRPCRequest } from "@/types/provider";
-import { WindowPromise } from "@/libs/window-promise";
-import AccountState from "../libs/accounts-state";
-import { getCustomError } from "@/libs/error";
-let isAccountAccessPending = false;
+import { CallbackFunction, MiddlewareFunction } from '@enkryptcom/types'
+import type BitcoinProvider from '..'
+import { ProviderRPCRequest } from '@/types/provider'
+import { WindowPromise } from '@/libs/window-promise'
+import AccountState from '../libs/accounts-state'
+import { getCustomError } from '@/libs/error'
+let isAccountAccessPending = false
 const pendingPromises: {
-  payload: ProviderRPCRequest;
-  res: CallbackFunction;
-}[] = [];
+  payload: ProviderRPCRequest
+  res: CallbackFunction
+}[] = []
 const method: MiddlewareFunction = function (
   this: BitcoinProvider,
   payload: ProviderRPCRequest,
   res,
   next
 ): void {
-  if (payload.method !== "btc_requestAccounts") return next();
+  if (payload.method !== 'btc_requestAccounts') return next()
   else {
     if (isAccountAccessPending) {
       pendingPromises.push({
         payload,
         res,
-      });
-      return;
+      })
+      return
     }
-    isAccountAccessPending = true;
+    isAccountAccessPending = true
     const handleRemainingPromises = () => {
-      isAccountAccessPending = false;
+      isAccountAccessPending = false
       if (pendingPromises.length) {
-        const promi = pendingPromises.pop();
-        if (promi) handleAccountAccess(promi.payload, promi.res);
+        const promi = pendingPromises.pop()
+        if (promi) handleAccountAccess(promi.payload, promi.res)
       }
-    };
+    }
     const handleAccountAccess = (
       _payload: ProviderRPCRequest,
       _res: CallbackFunction
     ) => {
       if (_payload.options && _payload.options.domain) {
-        isAccountAccessPending = true;
-        const accountsState = new AccountState();
+        isAccountAccessPending = true
+        const accountsState = new AccountState()
         accountsState
           .getApprovedAddresses(_payload.options.domain)
           .then((accounts) => {
             if (accounts.length) {
               _res(null, [
                 accounts.map((acc) => this.network.displayAddress(acc))[0],
-              ]);
-              handleRemainingPromises();
+              ])
+              handleRemainingPromises()
             } else {
-              const windowPromise = new WindowPromise();
+              const windowPromise = new WindowPromise()
               windowPromise
                 .getResponse(
                   this.getUIPath(this.UIRoutes.btcConnectDApp.path),
@@ -58,23 +58,23 @@ const method: MiddlewareFunction = function (
                   })
                 )
                 .then(({ error, result }) => {
-                  if (error) _res(error as any);
-                  const accounts = JSON.parse(result || "[]");
+                  if (error) _res(error as any)
+                  const accounts = JSON.parse(result || '[]')
                   _res(
                     null,
                     accounts.map((acc: string) =>
                       this.network.displayAddress(acc)
                     )
-                  );
+                  )
                 })
-                .finally(handleRemainingPromises);
+                .finally(handleRemainingPromises)
             }
-          });
+          })
       } else {
-        _res(getCustomError("No domain set!"));
+        _res(getCustomError('No domain set!'))
       }
-    };
-    handleAccountAccess(payload, res);
+    }
+    handleAccountAccess(payload, res)
   }
-};
-export default method;
+}
+export default method

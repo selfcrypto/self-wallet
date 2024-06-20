@@ -1,5 +1,5 @@
-import { BNType, GasPriceTypes } from "@/providers/common/types";
-import { BaseNetwork } from "@/types/base-network";
+import { BNType, GasPriceTypes } from '@/providers/common/types'
+import { BaseNetwork } from '@/types/base-network'
 import {
   EVMTransaction,
   GenericTransaction,
@@ -8,27 +8,27 @@ import {
   TokenType,
   TokenTypeTo,
   StatusOptionsResponse,
-} from "@enkryptcom/swap";
-import { EnkryptAccount } from "@enkryptcom/types";
+} from '@enkryptcom/swap'
+import { EnkryptAccount } from '@enkryptcom/types'
 export enum SWAP_LOADING {
-  LOADING = "loading",
-  LOOKING_FOR_OFFERS = "looking",
+  LOADING = 'loading',
+  LOOKING_FOR_OFFERS = 'looking',
 }
 
 export interface SwapData {
-  trades: ProviderResponseWithStatus[];
-  fromToken: TokenType;
-  toToken: TokenTypeTo;
-  priceDifference: string;
-  nativeBalance: BNType;
-  nativePrice: number;
-  existentialDeposit: BNType;
-  fromAddress: string;
-  toAddress: string;
+  trades: ProviderResponseWithStatus[]
+  fromToken: TokenType
+  toToken: TokenTypeTo
+  priceDifference: string
+  nativeBalance: BNType
+  nativePrice: number
+  existentialDeposit: BNType
+  fromAddress: string
+  toAddress: string
 }
 
 export interface ProviderResponseWithStatus extends ProviderSwapResponse {
-  status?: StatusOptionsResponse;
+  status?: StatusOptionsResponse
 }
 
 export enum SwapBestOfferWarnings {
@@ -38,14 +38,14 @@ export enum SwapBestOfferWarnings {
   NONE,
 }
 
-export type TransactionType = EVMTransaction | GenericTransaction;
+export type TransactionType = EVMTransaction | GenericTransaction
 
 export interface ExecuteSwapOptions {
-  from: EnkryptAccount;
-  fromToken: TokenType;
-  toToken: TokenTypeTo;
-  networkType: NetworkType;
-  network: BaseNetwork;
-  gasPriceType: GasPriceTypes;
-  swap: ProviderSwapResponse;
+  from: EnkryptAccount
+  fromToken: TokenType
+  toToken: TokenTypeTo
+  networkType: NetworkType
+  network: BaseNetwork
+  gasPriceType: GasPriceTypes
+  swap: ProviderSwapResponse
 }

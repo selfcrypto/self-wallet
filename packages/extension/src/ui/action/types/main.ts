@@ -1,3 +1,3 @@
 export interface MainState {
-  value: number;
+  value: number
 }

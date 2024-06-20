@@ -7,5 +7,5 @@ export default ({
     suppressScrollY,
     suppressScrollX,
     wheelPropagation,
-  };
-};
+  }
+}

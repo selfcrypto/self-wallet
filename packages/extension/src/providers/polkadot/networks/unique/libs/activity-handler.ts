@@ -1,25 +1,25 @@
-import { ActivityHandlerType } from "@/libs/activity-state/types";
-import cacheFetch from "@/libs/cache-fetch";
-import { BaseNetwork } from "@/types/base-network";
-import { Activity, ActivityStatus, ActivityType } from "@/types/activity";
+import { ActivityHandlerType } from '@/libs/activity-state/types'
+import cacheFetch from '@/libs/cache-fetch'
+import { BaseNetwork } from '@/types/base-network'
+import { Activity, ActivityStatus, ActivityType } from '@/types/activity'
 
-const TTL = 30000;
+const TTL = 30000
 
 type ExtrinsicData = {
-  amount: number;
-  block_index: string;
-  block_number: string;
-  fee: number;
-  from_owner: string;
-  from_owner_normalized: string;
-  hash: string;
-  method: string;
-  section: string;
-  success: boolean;
-  timestamp: number;
-  to_owner: string;
-  to_owner_normalized: string;
-};
+  amount: number
+  block_index: string
+  block_number: string
+  fee: number
+  from_owner: string
+  from_owner_normalized: string
+  hash: string
+  method: string
+  section: string
+  success: boolean
+  timestamp: number
+  to_owner: string
+  to_owner_normalized: string
+}
 
 const query = `
   query getLastTransfers($orderBy: ExtrinsicOrderByParams = {}, $where: ExtrinsicWhereParams = {}) {
@@ -38,19 +38,19 @@ const query = `
       timestamp
     }
   }
-`.replace(/[\n ]+/g, " ");
+`.replace(/[\n ]+/g, ' ')
 
 const getVariables = (address: string) => ({
-  orderBy: { timestamp: "desc" },
+  orderBy: { timestamp: 'desc' },
   where: {
     _and: [
       { amount: { _neq: 0 } },
       {
         method: {
-          _in: ["transfer", "transfer_all", "transfer_keep_alive"],
+          _in: ['transfer', 'transfer_all', 'transfer_keep_alive'],
         },
       },
-      { section: { _eq: "Balances" } },
+      { section: { _eq: 'Balances' } },
       {
         _or: [
           { from_owner_normalized: { _eq: address } },
@@ -59,7 +59,7 @@ const getVariables = (address: string) => ({
       },
     ],
   },
-});
+})
 
 function getLastTransfersByAddress(
   graphqlEndpoint: string,
@@ -68,19 +68,19 @@ function getLastTransfersByAddress(
   const queryParams = new URLSearchParams({
     query,
     variables: JSON.stringify(getVariables(address)),
-  });
+  })
 
-  const url = `${graphqlEndpoint}?${queryParams.toString()}`;
+  const url = `${graphqlEndpoint}?${queryParams.toString()}`
 
   return cacheFetch({ url }, TTL)
     .then((response) => {
-      return response.data.extrinsics.data;
+      return response.data.extrinsics.data
     })
     .catch((reason) => {
-      console.error("Failed to fetch activity", reason);
+      console.error('Failed to fetch activity', reason)
 
-      return [];
-    });
+      return []
+    })
 }
 
 const transform = (
@@ -104,11 +104,11 @@ const transform = (
     fee: activity.fee.toString(),
     nonce: 0,
     asset_symbol: network.currencyName,
-    asset_type: "",
+    asset_type: '',
   },
   status: activity.success ? ActivityStatus.success : ActivityStatus.failed,
   timestamp: activity.timestamp * 1000,
-  value: activity.amount + "".padStart(network.decimals, "0"),
+  value: activity.amount + ''.padStart(network.decimals, '0'),
   transactionHash: activity.block_index,
   type: ActivityType.transaction,
   token: {
@@ -117,14 +117,14 @@ const transform = (
     name: network.currencyNameLong,
     symbol: network.currencyName,
   },
-});
+})
 
 export const getActivityHandler = (
   graphqlEndpoint: string
 ): ActivityHandlerType => {
   return async (network: BaseNetwork, address: string) => {
-    const transfers = await getLastTransfersByAddress(graphqlEndpoint, address);
+    const transfers = await getLastTransfersByAddress(graphqlEndpoint, address)
 
-    return transfers.map((transfer) => transform(address, network, transfer));
-  };
-};
+    return transfers.map((transfer) => transform(address, network, transfer))
+  }
+}

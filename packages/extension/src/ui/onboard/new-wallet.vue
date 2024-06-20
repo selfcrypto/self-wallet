@@ -3,13 +3,13 @@
     <logo-big class="new-wallet__logo" />
     <h3>Multiple Chains.<br />One Wallet.</h3>
     <p>
-      Enkrypt is a wallet that gives you easy access to all things crypto and
+      SelfCrypto is a wallet that gives you easy access to all things crypto and
       web3.
     </p>
     <p>
       Switch accounts and chains with 1 click.<br />
-      Enkrypt currently supports the Ethereum and Polkadot ecosystems with more
-      chains on the way!
+      SelfCrypto currently supports the Ethereum and Polkadot ecosystems with
+      more chains on the way!
     </p>
 
     <div class="new-wallet__buttons">
@@ -23,25 +23,25 @@
   </div>
 </template>
 <script setup lang="ts">
-import LogoBig from "@action/icons/common/logo-big.vue";
-import BaseButton from "@action/components/base-button/index.vue";
-import { routes as cwalletRoutes } from "./create-wallet/routes";
-import { routes as rwalletRoutes } from "./restore-wallet/routes";
-import { useRouter } from "vue-router";
+import LogoBig from '@action/icons/common/logo-big.vue'
+import BaseButton from '@action/components/base-button/index.vue'
+import { routes as cwalletRoutes } from './create-wallet/routes'
+import { routes as rwalletRoutes } from './restore-wallet/routes'
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 
 const createAction = () => {
-  router.push({ name: cwalletRoutes.pickPassword.name });
-};
+  router.push({ name: cwalletRoutes.pickPassword.name })
+}
 
 const restoreAction = () => {
-  router.push({ name: rwalletRoutes.start.name });
-};
+  router.push({ name: rwalletRoutes.start.name })
+}
 </script>
 
 <style lang="less">
-@import "~@action/styles/theme.less";
+@import '~@action/styles/theme.less';
 
 .new-wallet {
   &__logo {
