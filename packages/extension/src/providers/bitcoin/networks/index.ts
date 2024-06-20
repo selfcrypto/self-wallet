@@ -6,6 +6,6 @@ import dogeNode from "./dogecoin";
 export default {
   bitcoin: btcNode,
   bitcoinTest: btcTestNode,
-  litecoin: ltcNode,
-  dogecoin: dogeNode,
+  // litecoin: ltcNode,
+  // dogecoin: dogeNode,
 };

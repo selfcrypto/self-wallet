@@ -65,14 +65,14 @@ const DEFAULT_BTC_NETWORK = Bitcoin;
 const DEFAULT_KADENA_NETWORK = Kadena;
 
 const POPULAR_NAMES = [
-  NetworkNames.Bitcoin,
+  // NetworkNames.Bitcoin,
   NetworkNames.Ethereum,
   NetworkNames.Matic,
-  NetworkNames.Polkadot,
+  // NetworkNames.Polkadot,
   NetworkNames.Binance,
-  NetworkNames.Rootstock,
+  // NetworkNames.Rootstock,
   NetworkNames.Optimism,
-  NetworkNames.Kadena,
+  // NetworkNames.Kadena,
 ];
 export {
   getAllNetworks,
