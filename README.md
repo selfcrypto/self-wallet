@@ -177,3 +177,26 @@ remove buy/sell ✅
 remove hardware wallet support ✅
 remove fake wallets ✅
 add self evm resolution ✅
+
+
+Chains to add:
+
+ADA
+ARB
+AVAX
+BNB
+BSC
+BTC
+DOT
+EOS
+KLV
+LTC
+NIM
+POLYGON
+SOL
+STRK
+TET
+TRX
+XLM 
+XMR
+XRP
