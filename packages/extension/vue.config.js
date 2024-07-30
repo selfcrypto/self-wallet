@@ -2,9 +2,7 @@ const baseConfigs = require("./configs/base-build");
 const browserConfigs = require("./configs/browser-build");
 
 module.exports = {
-  transpileDependencies: [
-    /@polkadot/,
-  ],
+  transpileDependencies: [/@polkadot/],
   pages: {
     index: {
       template: "public/index.html",

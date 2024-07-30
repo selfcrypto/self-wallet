@@ -16,7 +16,7 @@
     </router-link>
     <!-- v-if="(network as EvmNetwork).NFTHandler" -->
     <router-link
-      v-if="false"
+      v-if="(network as EvmNetwork).NFTHandler"
       :to="{ name: 'nfts', params: { id: !!selected ? selected : null } }"
     >
       <NFTs /><br />NFTs
