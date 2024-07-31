@@ -126,7 +126,7 @@ const isFocus = ref(false);
 const market = ref<CoinGeckoTokenMarket>();
 
 const isValidAddress = computed(() => {
-  // if (contractAddress.value) {
+  // if (contractAddress.value!.toLowerCase()) {
   //   return props.network.isAddress(contractAddress.value);
   // }
 
@@ -142,17 +142,17 @@ watch([contractAddress, props], async () => {
     close();
   }
 
-  const provider = new ethers.providers.JsonRpcProvider("https://bsc.drpc.org	");
-  const selfContract = new ethers.Contract(SelfNftAddress, erc721, provider);
+  // const provider = new ethers.providers.JsonRpcProvider("https://bsc.drpc.org	");
+  // const selfContract = new ethers.Contract(SelfNftAddress, erc721, provider);
 
-  const resolvedAddress = await selfContract.ownerOf(
-    keccak256(toUtf8Bytes(contractAddress.value as string))
-  );
+  // const contractAddress.value = await selfContract.ownerOf(
+  //   keccak256(toUtf8Bytes(contractAddress.value as string))
+  // );
 
   if (isValidAddress.value) {
     const api = (await props.network.api()) as API;
 
-    const info = await api.getTokenInfo(resolvedAddress);
+    const info = await api.getTokenInfo(contractAddress.value!.toLowerCase());
 
     if (info.name !== "Unknown") {
       let icon = props.network.icon;
@@ -161,11 +161,11 @@ watch([contractAddress, props], async () => {
       const marketData = new MarketData();
 
       const coingeckoInfo = await marketData.getMarketInfoByContracts(
-        [resolvedAddress],
+        [contractAddress.value!.toLowerCase()],
         props.network.coingeckoPlatform!
       );
 
-      const contractInfo = coingeckoInfo[resolvedAddress];
+      const contractInfo = coingeckoInfo[contractAddress.value!.toLowerCase()];
 
       if (contractInfo) {
         market.value = contractInfo;
@@ -179,7 +179,7 @@ watch([contractAddress, props], async () => {
           symbol: info.symbol,
           decimals: info.decimals,
           icon,
-          contract: resolvedAddress,
+          contract: contractAddress.value!.toLowerCase(),
           coingeckoID,
         });
 
@@ -195,7 +195,7 @@ watch([contractAddress, props], async () => {
       }
 
       tokenInfo.value = {
-        address: resolvedAddress as `0x${string}`,
+        address: contractAddress.value!.toLowerCase() as `0x${string}`,
         icon,
         type: TokenType.ERC20,
         coingeckoID,
