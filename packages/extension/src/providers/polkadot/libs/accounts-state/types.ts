@@ -1,6 +1,6 @@
 export enum StorageKeys {
-  accountsState = 'substrate-accounts-state',
+  accountsState = "substrate-accounts-state",
 }
 export interface IState {
-  isApproved: boolean
+  isApproved: boolean;
 }

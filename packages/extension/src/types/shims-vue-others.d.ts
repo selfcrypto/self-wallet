@@ -1,12 +1,12 @@
-import * as filters from '@action/utils/filters'
-import type { Eth } from 'web3-eth'
+import * as filters from "@action/utils/filters";
+import type { Eth } from "web3-eth";
 
-declare module '@vue/runtime-core' {
+declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
-    $filters: filters
+    $filters: filters;
   }
 }
 
-declare module 'web3-eth' {
-  export = Eth
+declare module "web3-eth" {
+  export = Eth;
 }

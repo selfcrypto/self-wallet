@@ -57,55 +57,55 @@
 </template>
 
 <script setup lang="ts">
-import SendAddressItem from '@/providers/common/ui/send-transaction/send-address-item.vue'
-import CustomScrollbar from '@action/components/custom-scrollbar/index.vue'
-import BaseButton from '@action/components/base-button/index.vue'
-import scrollSettings from '@/libs/utils/scroll-settings'
-import { onUpdated, ref } from 'vue'
-import { EnkryptAccount, KeyRecord } from '@enkryptcom/types'
-import PasteIcon from '@action/icons/actions/paste.vue'
-import ArrowBack from '@action/icons/common/arrow-back.vue'
-import { BaseNetwork } from '@/types/base-network'
+import SendAddressItem from "@/providers/common/ui/send-transaction/send-address-item.vue";
+import CustomScrollbar from "@action/components/custom-scrollbar/index.vue";
+import BaseButton from "@action/components/base-button/index.vue";
+import scrollSettings from "@/libs/utils/scroll-settings";
+import { onUpdated, ref } from "vue";
+import { EnkryptAccount, KeyRecord } from "@enkryptcom/types";
+import PasteIcon from "@action/icons/actions/paste.vue";
+import ArrowBack from "@action/icons/common/arrow-back.vue";
+import { BaseNetwork } from "@/types/base-network";
 const emit = defineEmits<{
-  (e: 'update:pasteFromClipboard'): void
-  (e: 'close', open: false): void
-}>()
+  (e: "update:pasteFromClipboard"): void;
+  (e: "close", open: false): void;
+}>();
 
 interface IProps {
-  showAccounts: boolean
-  accounts: EnkryptAccount[]
-  address: string
-  network: BaseNetwork
+  showAccounts: boolean;
+  accounts: EnkryptAccount[];
+  address: string;
+  network: BaseNetwork;
 }
 
-const props = defineProps<IProps>()
+const props = defineProps<IProps>();
 
-const searchAccounts = ref<KeyRecord[]>(props.accounts)
-const isMyAddress = ref(false)
+const searchAccounts = ref<KeyRecord[]>(props.accounts);
+const isMyAddress = ref(false);
 
 onUpdated(() => {
-  searchAccounts.value = props.accounts
-})
+  searchAccounts.value = props.accounts;
+});
 
 const close = () => {
-  emit('close', false)
-}
+  emit("close", false);
+};
 
 const sendToMyAddress = () => {
-  isMyAddress.value = true
-}
+  isMyAddress.value = true;
+};
 
 const back = () => {
-  isMyAddress.value = false
-}
+  isMyAddress.value = false;
+};
 
 const pasteFromClipboard = () => {
-  emit('update:pasteFromClipboard')
-}
+  emit("update:pasteFromClipboard");
+};
 </script>
 
 <style lang="less" scoped>
-@import '~@action/styles/theme.less';
+@import "~@action/styles/theme.less";
 
 .send-contacts-list {
   width: 100%;

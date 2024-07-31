@@ -1,3 +1,3 @@
 export interface NetworkState {
-  selected?: NetworkItem
+  selected?: NetworkItem;
 }

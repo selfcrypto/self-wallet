@@ -1,19 +1,19 @@
-import BrowserStorage from '../common/browser-storage'
-import { InternalStorageNamespace } from '@/types/provider'
+import BrowserStorage from "../common/browser-storage";
+import { InternalStorageNamespace } from "@/types/provider";
 import {
   IState,
   StorageKeys,
   CustomToken,
   CustomErc20Token,
   TokenType,
-} from './types'
-import { NetworkNames } from '@enkryptcom/types'
+} from "./types";
+import { NetworkNames } from "@enkryptcom/types";
 
 export class TokensState {
-  private storage: BrowserStorage
+  private storage: BrowserStorage;
 
   constructor() {
-    this.storage = new BrowserStorage(InternalStorageNamespace.tokensState)
+    this.storage = new BrowserStorage(InternalStorageNamespace.tokensState);
   }
 
   /**
@@ -26,10 +26,10 @@ export class TokensState {
     chainName: NetworkNames,
     token: CustomErc20Token
   ): Promise<boolean> {
-    let state: IState | null = await this.storage.get(StorageKeys.customTokens)
+    let state: IState | null = await this.storage.get(StorageKeys.customTokens);
 
     if (state && state[chainName]) {
-      const tokens = state[chainName]
+      const tokens = state[chainName];
 
       for (const t of tokens!) {
         if (
@@ -37,32 +37,32 @@ export class TokensState {
           (t as CustomErc20Token).address.toLowerCase() ===
             token.address.toLowerCase()
         ) {
-          return false
+          return false;
         }
       }
 
-      tokens!.push(token)
+      tokens!.push(token);
     } else {
       if (state) {
-        state[chainName] = [token]
+        state[chainName] = [token];
       } else {
-        state = { [chainName]: [token] }
+        state = { [chainName]: [token] };
       }
     }
 
-    this.storage.set(StorageKeys.customTokens, state)
-    return true
+    this.storage.set(StorageKeys.customTokens, state);
+    return true;
   }
 
   async getTokensByNetwork(chainName: NetworkNames): Promise<CustomToken[]> {
     const state: IState | null = await this.storage.get(
       StorageKeys.customTokens
-    )
+    );
 
     if (state) {
-      return state[chainName] ?? []
+      return state[chainName] ?? [];
     }
 
-    return []
+    return [];
   }
 }

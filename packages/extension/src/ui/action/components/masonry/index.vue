@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { Ref } from 'vue'
-import { nextTick, onMounted, ref, toRefs, watch } from 'vue'
-type Column = number[]
+import type { Ref } from "vue";
+import { nextTick, onMounted, ref, toRefs, watch } from "vue";
+type Column = number[];
 const props = withDefaults(
   defineProps<{
-    columnWidth?: number
-    items: unknown[] | undefined
-    gap?: number
-    rtl?: boolean
-    ssrColumns?: number
+    columnWidth?: number;
+    items: unknown[] | undefined;
+    gap?: number;
+    rtl?: boolean;
+    ssrColumns?: number;
   }>(),
   {
     columnWidth: 400,
@@ -16,67 +16,67 @@ const props = withDefaults(
     rtl: false,
     ssrColumns: 0,
   }
-)
+);
 const emit = defineEmits<{
-  (event: 'redraw'): void
-  (event: 'redrawSkip'): void
-}>()
-const { columnWidth, items, gap, rtl, ssrColumns } = toRefs(props)
-const columns = ref<Column[]>([])
-const masonry = ref<HTMLDivElement>() as Ref<HTMLDivElement>
+  (event: "redraw"): void;
+  (event: "redrawSkip"): void;
+}>();
+const { columnWidth, items, gap, rtl, ssrColumns } = toRefs(props);
+const columns = ref<Column[]>([]);
+const masonry = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
 function columnCount(): number {
   const count = Math.floor(
     (masonry.value.getBoundingClientRect().width + gap.value) /
       (columnWidth.value + gap.value)
-  )
-  return count > 0 ? Math.max(2, count) : 2
+  );
+  return count > 0 ? Math.max(2, count) : 2;
 }
 function createColumns(count: number): Column[] {
-  return [...new Array(count)].map(() => [])
+  return [...new Array(count)].map(() => []);
 }
 if (ssrColumns.value > 0) {
-  const newColumns = createColumns(ssrColumns.value)
+  const newColumns = createColumns(ssrColumns.value);
   if (items.value) {
     items.value.forEach((_: unknown, i: number) =>
       newColumns[i % ssrColumns.value].push(i)
-    )
+    );
   }
 
-  columns.value = newColumns
+  columns.value = newColumns;
 }
 async function fillColumns(itemIndex: number) {
   if (!!items.value && itemIndex >= items.value.length) {
-    return
+    return;
   }
-  await nextTick()
-  const columnDivs = [...masonry.value.children] as HTMLDivElement[]
+  await nextTick();
+  const columnDivs = [...masonry.value.children] as HTMLDivElement[];
   if (rtl.value) {
-    columnDivs.reverse()
+    columnDivs.reverse();
   }
   const target = columnDivs.reduce((prev, curr) =>
     curr.getBoundingClientRect().height < prev.getBoundingClientRect().height
       ? curr
       : prev
-  )
-  columns.value[+target.dataset.index!].push(itemIndex)
-  await fillColumns(itemIndex + 1)
+  );
+  columns.value[+target.dataset.index!].push(itemIndex);
+  await fillColumns(itemIndex + 1);
 }
 async function redraw(force = false) {
   if (columns.value.length === columnCount() && !force) {
-    emit('redrawSkip')
-    return
+    emit("redrawSkip");
+    return;
   }
-  columns.value = createColumns(columnCount())
-  const scrollY = window.scrollY
-  await fillColumns(0)
-  window.scrollTo({ top: scrollY })
-  emit('redraw')
+  columns.value = createColumns(columnCount());
+  const scrollY = window.scrollY;
+  await fillColumns(0);
+  window.scrollTo({ top: scrollY });
+  emit("redraw");
 }
 onMounted(() => {
-  redraw()
-})
-watch([items, rtl], () => redraw(true))
-watch([columnWidth, gap], () => redraw())
+  redraw();
+});
+watch([items, rtl], () => redraw(true));
+watch([columnWidth, gap], () => redraw());
 </script>
 
 <template>

@@ -1,19 +1,19 @@
-import { BitcoinNetworkInfo, HaskoinUnspentType } from '../types'
-import { address as BTCAddress } from 'bitcoinjs-lib'
-import { GasPriceTypes } from '@/providers/common/types'
-import { fromBase } from '@enkryptcom/utils'
-import BigNumber from 'bignumber.js'
-import { BitcoinNetwork } from '../types/bitcoin-network'
-import { BTCTxInfo } from '../ui/types'
+import { BitcoinNetworkInfo, HaskoinUnspentType } from "../types";
+import { address as BTCAddress } from "bitcoinjs-lib";
+import { GasPriceTypes } from "@/providers/common/types";
+import { fromBase } from "@enkryptcom/utils";
+import BigNumber from "bignumber.js";
+import { BitcoinNetwork } from "../types/bitcoin-network";
+import { BTCTxInfo } from "../ui/types";
 
 const isAddress = (address: string, network: BitcoinNetworkInfo): boolean => {
   try {
-    BTCAddress.toOutputScript(address, network)
-    return true
+    BTCAddress.toOutputScript(address, network);
+    return true;
   } catch {
-    return false
+    return false;
   }
-}
+};
 
 const getTxInfo = (
   utxos: HaskoinUnspentType[],
@@ -22,7 +22,7 @@ const getTxInfo = (
   const txInfo: BTCTxInfo = {
     inputs: [],
     outputs: [],
-  }
+  };
   utxos.forEach((u) => {
     txInfo.inputs.push({
       hash: u.txid,
@@ -32,8 +32,8 @@ const getTxInfo = (
         script: u.pkscript,
         value: u.value,
       },
-    })
-  })
+    });
+  });
   if (ordinalUTXO) {
     txInfo.inputs.unshift({
       hash: ordinalUTXO.txid,
@@ -43,27 +43,27 @@ const getTxInfo = (
         script: ordinalUTXO.pkscript,
         value: ordinalUTXO.value,
       },
-    })
+    });
   }
-  return txInfo
-}
+  return txInfo;
+};
 
 const getGasCostValues = async (
   network: BitcoinNetwork,
   byteSize: number,
-  nativeVal = '0',
+  nativeVal = "0",
   decimals: number,
   currencyName: string
 ) => {
-  const fees = await network.feeHandler()
+  const fees = await network.feeHandler();
   const gasVals = {
     [GasPriceTypes.FASTEST]: (byteSize * fees.FASTEST).toString(),
     [GasPriceTypes.FAST]: (byteSize * fees.FAST).toString(),
     [GasPriceTypes.REGULAR]: (byteSize * fees.REGULAR).toString(),
     [GasPriceTypes.ECONOMY]: (byteSize * fees.ECONOMY).toString(),
-  }
+  };
   const getConvertedVal = (type: GasPriceTypes) =>
-    fromBase(gasVals[type], decimals)
+    fromBase(gasVals[type], decimals);
 
   const gasCostValues = {
     [GasPriceTypes.ECONOMY]: {
@@ -72,7 +72,7 @@ const getGasCostValues = async (
         .times(nativeVal!)
         .toString(),
       nativeSymbol: currencyName,
-      fiatSymbol: 'USD',
+      fiatSymbol: "USD",
     },
     [GasPriceTypes.REGULAR]: {
       nativeValue: getConvertedVal(GasPriceTypes.REGULAR),
@@ -80,7 +80,7 @@ const getGasCostValues = async (
         .times(nativeVal!)
         .toString(),
       nativeSymbol: currencyName,
-      fiatSymbol: 'USD',
+      fiatSymbol: "USD",
     },
     [GasPriceTypes.FAST]: {
       nativeValue: getConvertedVal(GasPriceTypes.FAST),
@@ -88,7 +88,7 @@ const getGasCostValues = async (
         .times(nativeVal!)
         .toString(),
       nativeSymbol: currencyName,
-      fiatSymbol: 'USD',
+      fiatSymbol: "USD",
     },
     [GasPriceTypes.FASTEST]: {
       nativeValue: getConvertedVal(GasPriceTypes.FASTEST),
@@ -96,9 +96,9 @@ const getGasCostValues = async (
         .times(nativeVal!)
         .toString(),
       nativeSymbol: currencyName,
-      fiatSymbol: 'USD',
+      fiatSymbol: "USD",
     },
-  }
-  return gasCostValues
-}
-export { isAddress, getGasCostValues, getTxInfo }
+  };
+  return gasCostValues;
+};
+export { isAddress, getGasCostValues, getTxInfo };

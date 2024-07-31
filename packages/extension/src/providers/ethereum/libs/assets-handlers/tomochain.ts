@@ -1,15 +1,15 @@
-import { SupportedNetworkNames, TokenBalance } from './types/tokenbalance-mew'
-import { NATIVE_TOKEN_ADDRESS } from '../common'
-import { numberToHex } from 'web3-utils'
+import { SupportedNetworkNames, TokenBalance } from "./types/tokenbalance-mew";
+import { NATIVE_TOKEN_ADDRESS } from "../common";
+import { numberToHex } from "web3-utils";
 
 interface TokenBalanceType {
-  token: string
-  quantity: string
-  error?: unknown
+  token: string;
+  quantity: string;
+  error?: unknown;
 }
 
 interface AccountBalanceType {
-  balance: string
+  balance: string;
 }
 
 const getBalances = (chain: SupportedNetworkNames, address: string) => {
@@ -17,27 +17,29 @@ const getBalances = (chain: SupportedNetworkNames, address: string) => {
     .then((res) => res.json())
     .then(async (json) => {
       if (json.error)
-        return Promise.reject(`TOKENBALANCE-MEW: ${JSON.stringify(json.error)}`)
+        return Promise.reject(
+          `TOKENBALANCE-MEW: ${JSON.stringify(json.error)}`
+        );
       else {
         const nativeBalance = await fetch(
           `https://tomoscan.io/api/account/${address}`
         )
           .then((res) => res.json())
-          .then((json: AccountBalanceType) => json.balance)
+          .then((json: AccountBalanceType) => json.balance);
         const newResults = (json.data as TokenBalanceType[]).map((tb: any) => {
           const rawTx: TokenBalance = {
             contract: tb.token.toLowerCase(),
             balance: numberToHex(tb.quantity),
-          }
-          return rawTx
-        })
+          };
+          return rawTx;
+        });
         newResults.unshift({
           contract: NATIVE_TOKEN_ADDRESS,
           balance: numberToHex(nativeBalance),
-        })
-        return newResults.slice(0, 50) as TokenBalance[]
+        });
+        return newResults.slice(0, 50) as TokenBalance[];
       }
-    })
-}
+    });
+};
 
-export default getBalances
+export default getBalances;

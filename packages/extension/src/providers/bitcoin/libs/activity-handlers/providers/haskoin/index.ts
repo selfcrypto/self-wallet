@@ -1,12 +1,12 @@
-import MarketData from '@/libs/market-data'
-import { HaskoinTxType } from '@/providers/bitcoin/types'
+import MarketData from "@/libs/market-data";
+import { HaskoinTxType } from "@/providers/bitcoin/types";
 import {
   Activity,
   ActivityStatus,
   ActivityType,
   BTCRawInfo,
-} from '@/types/activity'
-import { BaseNetwork } from '@/types/base-network'
+} from "@/types/activity";
+import { BaseNetwork } from "@/types/base-network";
 export default async (
   network: BaseNetwork,
   pubkey: string
@@ -16,36 +16,36 @@ export default async (
   )
     .then((res) => res.json())
     .then(async (txs: HaskoinTxType[]) => {
-      if ((txs as any).error) return []
-      let tokenPrice = '0'
+      if ((txs as any).error) return [];
+      let tokenPrice = "0";
       if (network.coingeckoID) {
-        const marketData = new MarketData()
+        const marketData = new MarketData();
         await marketData
           .getTokenPrice(network.coingeckoID)
-          .then((mdata) => (tokenPrice = mdata || '0'))
+          .then((mdata) => (tokenPrice = mdata || "0"));
       }
 
-      const address = network.displayAddress(pubkey)
+      const address = network.displayAddress(pubkey);
       return txs.map((tx) => {
-        const isIncoming = !tx.inputs.find((i) => i.address === address)
+        const isIncoming = !tx.inputs.find((i) => i.address === address);
 
-        let toAddress = ''
-        let value = 0
+        let toAddress = "";
+        let value = 0;
 
         if (isIncoming) {
-          const relevantOut = tx.outputs.find((tx) => tx.address === address)
+          const relevantOut = tx.outputs.find((tx) => tx.address === address);
           if (relevantOut) {
-            toAddress = relevantOut.address
-            value = relevantOut.value
+            toAddress = relevantOut.address;
+            value = relevantOut.value;
           }
         } else {
-          const relevantOut = tx.outputs.find((tx) => tx.address !== address)
+          const relevantOut = tx.outputs.find((tx) => tx.address !== address);
           if (relevantOut) {
-            toAddress = relevantOut.address
-            value = relevantOut.value
+            toAddress = relevantOut.address;
+            value = relevantOut.value;
           } else {
-            toAddress = tx.outputs[0].address
-            value = Number(tx.outputs[0].value)
+            toAddress = tx.outputs[0].address;
+            value = Number(tx.outputs[0].value);
           }
         }
 
@@ -63,7 +63,7 @@ export default async (
           })),
           transactionHash: tx.txid,
           timestamp: tx.time * 1000,
-        }
+        };
         const act: Activity = {
           from: tx.inputs[0].address,
           isIncoming,
@@ -85,11 +85,11 @@ export default async (
           type: ActivityType.transaction,
           value: value.toString(),
           rawInfo: rawInfo,
-        }
-        return act
-      })
+        };
+        return act;
+      });
     })
     .catch(() => {
-      return []
-    })
-}
+      return [];
+    });
+};

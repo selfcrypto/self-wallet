@@ -1,10 +1,10 @@
 export interface SelectedData {
-  key: string
-  value: string
-  path: string
+  key: string;
+  value: string;
+  path: string;
 }
 export interface Data {
-  [key: string]: string
+  [key: string]: string;
 }
 
 export enum ItemType {
@@ -19,14 +19,14 @@ export type ValueTypes =
   | number
   | bigint
   | boolean
-  | undefined
+  | undefined;
 
 export type ItemData = {
-  key: string
-  type: ItemType
-  path: string
-  depth: number
-  length?: number
-  children?: ItemData[]
-  value?: ValueTypes
-}
+  key: string;
+  type: ItemType;
+  path: string;
+  depth: number;
+  length?: number;
+  children?: ItemData[];
+  value?: ValueTypes;
+};

@@ -1,17 +1,17 @@
-import cacheFetch from '@/libs/cache-fetch'
-import { EvmNetwork } from '@/providers/ethereum/types/evm-network'
+import cacheFetch from "@/libs/cache-fetch";
+import { EvmNetwork } from "@/providers/ethereum/types/evm-network";
 import {
   Activity,
   ActivityStatus,
   ActivityType,
   EthereumRawInfo,
-} from '@/types/activity'
-import { BaseNetwork } from '@/types/base-network'
-import { numberToHex } from 'web3-utils'
-import { decodeTx } from '../../../transaction/decoder'
-import { NetworkEndpoints } from './configs'
-import { EtherscanTxType } from './types'
-const TTL = 30000
+} from "@/types/activity";
+import { BaseNetwork } from "@/types/base-network";
+import { numberToHex } from "web3-utils";
+import { decodeTx } from "../../../transaction/decoder";
+import { NetworkEndpoints } from "./configs";
+import { EtherscanTxType } from "./types";
+const TTL = 30000;
 const getAddressActivity = async (
   address: string,
   endpoint: string
@@ -22,8 +22,8 @@ const getAddressActivity = async (
     },
     TTL
   ).then((res) => {
-    if (res.status === '0') return []
-    const results = res.result as EtherscanTxType[]
+    if (res.status === "0") return [];
+    const results = res.result as EtherscanTxType[];
     const newResults = results.reverse().map((tx) => {
       const rawTx: EthereumRawInfo = {
         blockHash: tx.blockHash,
@@ -32,28 +32,28 @@ const getAddressActivity = async (
         data: tx.input,
         effectiveGasPrice: numberToHex(tx.gasPrice),
         from: tx.from,
-        to: tx.to === '' ? null : tx.to,
+        to: tx.to === "" ? null : tx.to,
         gas: numberToHex(tx.gas),
         gasUsed: numberToHex(tx.gasUsed),
         nonce: numberToHex(tx.nonce),
-        status: tx.isError === '0' ? true : false,
+        status: tx.isError === "0" ? true : false,
         transactionHash: tx.hash,
         value: numberToHex(tx.value),
         timestamp: parseInt(tx.timeStamp) * 1000,
-      }
-      return rawTx
-    })
-    return newResults.slice(0, 50) as EthereumRawInfo[]
-  })
-}
+      };
+      return rawTx;
+    });
+    return newResults.slice(0, 50) as EthereumRawInfo[];
+  });
+};
 export default async (
   network: BaseNetwork,
   address: string
 ): Promise<Activity[]> => {
-  address = address.toLowerCase()
+  address = address.toLowerCase();
   const enpoint =
-    NetworkEndpoints[network.name as keyof typeof NetworkEndpoints]
-  const activities = await getAddressActivity(address, enpoint)
+    NetworkEndpoints[network.name as keyof typeof NetworkEndpoints];
+  const activities = await getAddressActivity(address, enpoint);
   const Promises = activities.map((activity) => {
     return decodeTx(activity, network as EvmNetwork).then((txData) => {
       return {
@@ -79,8 +79,8 @@ export default async (
           symbol: txData.tokenSymbol,
           price: txData.currentPriceUSD.toString(),
         },
-      }
-    })
-  })
-  return Promise.all(Promises)
-}
+      };
+    });
+  });
+  return Promise.all(Promises);
+};

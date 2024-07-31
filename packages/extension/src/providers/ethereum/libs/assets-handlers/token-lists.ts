@@ -1,7 +1,7 @@
-import cacheFetch from '@/libs/cache-fetch'
-import { CoingeckoPlatform, NetworkNames } from '@enkryptcom/types'
-import { CGToken, SupportedNetworkNames } from './types/tokenbalance-mew'
-const TOKEN_FETCH_TTL = 1000 * 60 * 60
+import cacheFetch from "@/libs/cache-fetch";
+import { CoingeckoPlatform, NetworkNames } from "@enkryptcom/types";
+import { CGToken, SupportedNetworkNames } from "./types/tokenbalance-mew";
+const TOKEN_FETCH_TTL = 1000 * 60 * 60;
 const TokenList: Record<SupportedNetworkNames, string> = {
   [NetworkNames.Binance]: `https://tokens.coingecko.com/${CoingeckoPlatform.Binance}/all.json`,
   [NetworkNames.Ethereum]: `https://tokens.coingecko.com/${CoingeckoPlatform.Ethereum}/all.json`,
@@ -26,12 +26,12 @@ const TokenList: Record<SupportedNetworkNames, string> = {
   [NetworkNames.TomoChain]: `https://tokens.coingecko.com/${CoingeckoPlatform.TomoChain}/all.json`,
   [NetworkNames.Shibarium]: `https://tokens.coingecko.com/${CoingeckoPlatform.Shibarium}/all.json`,
   [NetworkNames.Rollux]: `https://tokens.coingecko.com/${CoingeckoPlatform.Rollux}/all.json`,
-}
+};
 
 const getKnownNetworkTokens = async (
   networkName: NetworkNames
 ): Promise<Record<string, CGToken>> => {
-  if (!TokenList[networkName as SupportedNetworkNames]) return {}
+  if (!TokenList[networkName as SupportedNetworkNames]) return {};
   return cacheFetch(
     {
       url: TokenList[networkName as SupportedNetworkNames],
@@ -39,14 +39,14 @@ const getKnownNetworkTokens = async (
     TOKEN_FETCH_TTL
   )
     .then((json) => {
-      const tokens: CGToken[] = json.tokens
-      const tObject: Record<string, CGToken> = {}
+      const tokens: CGToken[] = json.tokens;
+      const tObject: Record<string, CGToken> = {};
       tokens.forEach((t) => {
-        t.address = t.address.toLowerCase()
-        tObject[t.address] = t
-      })
-      return tObject
+        t.address = t.address.toLowerCase();
+        tObject[t.address] = t;
+      });
+      return tObject;
     })
-    .catch(() => ({}))
-}
-export { TokenList, getKnownNetworkTokens }
+    .catch(() => ({}));
+};
+export { TokenList, getKnownNetworkTokens };

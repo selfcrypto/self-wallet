@@ -1,10 +1,10 @@
-import Storage from '@enkryptcom/storage'
-import { BrowserStorageArea } from '@enkryptcom/types'
+import Storage from "@enkryptcom/storage";
+import { BrowserStorageArea } from "@enkryptcom/types";
 
 class BrowserStorage extends Storage {
   constructor(namespace: string, storage?: BrowserStorageArea) {
-    super(namespace, { storage })
+    super(namespace, { storage });
   }
 }
 
-export default BrowserStorage
+export default BrowserStorage;

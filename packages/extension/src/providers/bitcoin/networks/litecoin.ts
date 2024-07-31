@@ -1,38 +1,38 @@
-import { NetworkNames } from '@enkryptcom/types'
+import { NetworkNames } from "@enkryptcom/types";
 import {
   BitcoinNetwork,
   BitcoinNetworkOptions,
   PaymentType,
-} from '../types/bitcoin-network'
-import { ssHandler } from '../libs/activity-handlers'
-import wrapActivityHandler from '@/libs/activity-state/wrap-activity-handler'
-import SSFeeHandler from '../libs/ss-fee-handler'
-import SSApi from '../libs/api-ss'
+} from "../types/bitcoin-network";
+import { ssHandler } from "../libs/activity-handlers";
+import wrapActivityHandler from "@/libs/activity-state/wrap-activity-handler";
+import SSFeeHandler from "../libs/ss-fee-handler";
+import SSApi from "../libs/api-ss";
 
 const litecoinOptions: BitcoinNetworkOptions = {
   name: NetworkNames.Litecoin,
-  name_long: 'Litecoin',
-  homePage: 'https://litecoin.org/',
-  blockExplorerTX: 'https://explorer.btc.com/ltc/transaction/[[txHash]]',
-  blockExplorerAddr: 'https://explorer.btc.com/ltc/address/[[address]]',
+  name_long: "Litecoin",
+  homePage: "https://litecoin.org/",
+  blockExplorerTX: "https://explorer.btc.com/ltc/transaction/[[txHash]]",
+  blockExplorerAddr: "https://explorer.btc.com/ltc/address/[[address]]",
   isTestNetwork: false,
-  currencyName: 'LTC',
-  currencyNameLong: 'Litecoin',
-  icon: require('./icons/ltc.svg'),
+  currencyName: "LTC",
+  currencyNameLong: "Litecoin",
+  icon: require("./icons/ltc.svg"),
   decimals: 8,
-  node: 'https://partners.mewapi.io/nodes/ss/ltc',
-  coingeckoID: 'litecoin',
+  node: "https://partners.mewapi.io/nodes/ss/ltc",
+  coingeckoID: "litecoin",
   dust: 0.0001,
   apiType: SSApi,
   activityHandler: wrapActivityHandler(ssHandler),
   basePath: "m/49'/2'/0'/0",
   feeHandler: () => {
-    return SSFeeHandler('https://partners.mewapi.io/nodes/ss/ltc/api/v1/fees')
+    return SSFeeHandler("https://partners.mewapi.io/nodes/ss/ltc/api/v1/fees");
   },
   networkInfo: {
     name: NetworkNames.Litecoin,
-    messagePrefix: '\x19Litecoin Signed Message:\n',
-    bech32: 'ltc',
+    messagePrefix: "\x19Litecoin Signed Message:\n",
+    bech32: "ltc",
     bip32: {
       public: 0x019da462,
       private: 0x019d9cfe,
@@ -44,8 +44,8 @@ const litecoinOptions: BitcoinNetworkOptions = {
     paymentType: PaymentType.P2WPKH,
     maxFeeRate: 5000 * 2,
   },
-}
+};
 
-const litecoin = new BitcoinNetwork(litecoinOptions)
+const litecoin = new BitcoinNetwork(litecoinOptions);
 
-export default litecoin
+export default litecoin;

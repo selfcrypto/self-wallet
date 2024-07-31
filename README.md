@@ -161,6 +161,10 @@ yarn install in root
 yarn build:all in root
 yarn watch packages/extension
 
+yarn prettier --write "**/*.{js,ts,vue}"
+yarn eslint --fix "src/**/*.{js,ts,vue}"
+
+
 Tasks:
 Show only evm compatiple chains at main page ✅
 when enters manage networks show only evm chains ✅

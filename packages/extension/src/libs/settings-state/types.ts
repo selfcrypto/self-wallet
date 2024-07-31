@@ -1,31 +1,31 @@
 export enum StorageKeys {
-  evmState = 'evm-settings-state',
-  substrateState = 'substrate-settings-state',
-  btcState = 'btc-settings-state',
-  enkryptState = 'enkrypt-settings-state',
+  evmState = "evm-settings-state",
+  substrateState = "substrate-settings-state",
+  btcState = "btc-settings-state",
+  enkryptState = "enkrypt-settings-state",
 }
 export interface EVMInjectSettings {
-  disabled: boolean
-  timestamp: number
+  disabled: boolean;
+  timestamp: number;
 }
 export interface EVMSettingsType {
-  inject: EVMInjectSettings
+  inject: EVMInjectSettings;
 }
 export interface SubstrateSettingsType {
-  injectPolkadotjs: boolean
+  injectPolkadotjs: boolean;
 }
 export interface BtcSettingsType {
-  injectUnisat: boolean
+  injectUnisat: boolean;
 }
 export interface EnkryptSettingsType {
-  installedTimestamp: number
-  randomUserID: string
-  isMetricsEnabled: boolean
+  installedTimestamp: number;
+  randomUserID: string;
+  isMetricsEnabled: boolean;
 }
 export interface SettingsType {
-  evm: EVMSettingsType
-  substrate: SubstrateSettingsType
-  btc: BtcSettingsType
-  enkrypt: EnkryptSettingsType
-  manifestVersion: number
+  evm: EVMSettingsType;
+  substrate: SubstrateSettingsType;
+  btc: BtcSettingsType;
+  enkrypt: EnkryptSettingsType;
+  manifestVersion: number;
 }

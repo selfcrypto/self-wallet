@@ -1,18 +1,18 @@
-import { SubstrateToken } from '@/providers/polkadot/types/substrate-token'
-import { BaseTokenOptions, SendOptions } from '@/types/base-token'
-import { ApiPromise } from '@polkadot/api'
-import { SubmittableExtrinsic } from '@polkadot/api/types'
-import { ISubmittableResult } from '@polkadot/types/types'
+import { SubstrateToken } from "@/providers/polkadot/types/substrate-token";
+import { BaseTokenOptions, SendOptions } from "@/types/base-token";
+import { ApiPromise } from "@polkadot/api";
+import { SubmittableExtrinsic } from "@polkadot/api/types";
+import { ISubmittableResult } from "@polkadot/types/types";
 
 export interface AssetTokenOptions extends BaseTokenOptions {
-  id: string
+  id: string;
 }
 
 export class AssetToken extends SubstrateToken {
-  private id: string
+  private id: string;
   constructor(options: AssetTokenOptions) {
-    super(options)
-    this.id = options.id
+    super(options);
+    this.id = options.id;
   }
 
   public async getLatestUserBalance(
@@ -21,13 +21,13 @@ export class AssetToken extends SubstrateToken {
   ): Promise<string> {
     return api.query.assets.account(this.id, address).then((res) => {
       if (res) {
-        const data = res.toJSON()
-        const balance = data ? (data as any).balance.toString() : '0'
-        this.balance = balance
-        return balance
+        const data = res.toJSON();
+        const balance = data ? (data as any).balance.toString() : "0";
+        this.balance = balance;
+        return balance;
       }
-      return '0'
-    })
+      return "0";
+    });
   }
 
   public async send(
@@ -35,9 +35,9 @@ export class AssetToken extends SubstrateToken {
     to: string,
     amount: string,
     options?: SendOptions | undefined
-  ): Promise<SubmittableExtrinsic<'promise', ISubmittableResult>> {
-    if (options && options.type === 'all')
-      return api.tx.assets.transfer(this.id, { id: to }, amount)
-    return api.tx.assets.transferKeepAlive(this.id, { id: to }, amount)
+  ): Promise<SubmittableExtrinsic<"promise", ISubmittableResult>> {
+    if (options && options.type === "all")
+      return api.tx.assets.transfer(this.id, { id: to }, amount);
+    return api.tx.assets.transferKeepAlive(this.id, { id: to }, amount);
   }
 }
