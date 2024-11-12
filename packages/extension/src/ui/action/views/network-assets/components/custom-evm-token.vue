@@ -9,15 +9,23 @@
       </div>
       <div class="add-custom-token__contract-input" :class="{ focus: isFocus }">
         <div class="add-custom-token__contract-input__address">
-          <p>Contract address:</p>
+          <p>Name or Contract address:</p>
           <input
             v-model="contractAddress"
             :class="{ invalid: !isValidAddress }"
             type="text"
-            placeholder="0x... address"
+            placeholder="self_usdt"
             @focus="changeFocus"
             @blur="changeFocus"
           />
+          <p>{{ name }}</p>
+        </div>
+      </div>
+
+      <div v-if="!isValidName && !isValidAddress">
+        <div class="add-custom-token__error">
+          <alert-icon />
+          <p>Make sure name starts with self_</p>
         </div>
       </div>
 
@@ -124,13 +132,23 @@ const accountBalance = ref<string>();
 const notTokenAddress = ref(false);
 const isFocus = ref(false);
 const market = ref<CoinGeckoTokenMarket>();
+const name = ref<string>();
+const isValidName = ref(false);
+
+const networks: any = {
+  BNB: "bsc",
+  ETH: "eth",
+  MATIC: "polygon",
+  ARB: "arb",
+  AVAX: "avax",
+};
 
 const isValidAddress = computed(() => {
-  // if (contractAddress.value!.toLowerCase()) {
-  //   return props.network.isAddress(contractAddress.value);
-  // }
+  if (contractAddress.value) {
+    return props.network.isAddress(contractAddress.value);
+  }
 
-  return true;
+  return false;
 });
 
 watch([contractAddress, props], async () => {
@@ -142,12 +160,28 @@ watch([contractAddress, props], async () => {
     close();
   }
 
-  // const provider = new ethers.providers.JsonRpcProvider("https://bsc.drpc.org	");
-  // const selfContract = new ethers.Contract(SelfNftAddress, erc721, provider);
+  const provider = new ethers.providers.JsonRpcProvider("https://bsc.drpc.org	");
+  const selfContract = new ethers.Contract(SelfNftAddress, erc721, provider);
 
-  // const contractAddress.value = await selfContract.ownerOf(
-  //   keccak256(toUtf8Bytes(contractAddress.value as string))
-  // );
+  const tokenUri = await selfContract.tokenURI(
+    keccak256(toUtf8Bytes(contractAddress.value as string))
+  );
+  const ipfsPrefix = "ipfs://";
+  const gatewayPrefix = "https://nftstorage.link/ipfs/";
+  const cid = tokenUri.substring(ipfsPrefix.length);
+  const gatewayLink = gatewayPrefix + cid;
+
+  const response = await fetch(`${gatewayLink}`);
+  const metadata = await response.json();
+  const networka = metadata.foreignAddresses[networks[props.network.name]];
+
+  name.value = contractAddress.value;
+
+  isValidName.value = (name.value && name.value.startsWith("self_")) || false;
+
+  contractAddress.value = networka.address;
+
+  console.log(isValidAddress.value, "isValidAddress.value");
 
   if (isValidAddress.value) {
     const api = (await props.network.api()) as API;
@@ -326,7 +360,7 @@ const addToken = async () => {
   }
 
   &__contract-input {
-    height: 64px;
+    height: 70px;
     background: #ffffff;
     margin: 12px 32px 8px 32px;
     box-sizing: border-box;

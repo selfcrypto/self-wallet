@@ -1,15 +1,14 @@
 <template>
   <div class="new-wallet">
     <logo-big class="new-wallet__logo" />
-    <h3>Multiple Chains.<br />One Wallet.</h3>
+    <h3>Use Names.<br />Not Addresses.</h3>
     <p>
-      SelfCrypto is a wallet that gives you easy access to all things crypto and
-      web3.
+      SelfCrypto is a wallet that simplifies your crypto experience by replacing
+      complex addresses with easy-to-remember names.
     </p>
     <p>
-      Switch accounts and chains with 1 click.<br />
-      SelfCrypto currently supports the Ethereum and Polkadot ecosystems with
-      more chains on the way!
+      Send tokens effortlessly by typing the recipient's name instead of their
+      address.
     </p>
 
     <div class="new-wallet__buttons">
