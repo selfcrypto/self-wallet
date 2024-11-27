@@ -10,7 +10,7 @@
 
 ## About SelfCrypto
 
-SelfCrypto is a web3 wallet built from the ground up to support the multi-chain future. Send, receive, swap, manage your tokens and NFTs, and interact with dapps on all of your favorite chains with just a few clicks. With only one seed phrase for all of your accounts SelfCrypto makes it easy to manage your assets and stay secure. If you're looking for that extra layer of security SelfCrypto also supports popular hardware wallets such as Ledger and Trezor.
+SelfCrypto is a web3 wallet based on [Enkrypt wallet](https://www.enkrypt.com/), built to support the multi-chain future. Send, receive, swap, manage your tokens and NFTs, and interact with dapps on all of your favorite chains with just a few clicks. With only one seed phrase for all of your accounts SelfCrypto makes it easy to manage your assets and stay secure. SelfCrypto features its own name resolution service and token naming service, making it easier to interact with blockchain addresses and tokens. 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
