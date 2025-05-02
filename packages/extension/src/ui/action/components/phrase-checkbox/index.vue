@@ -30,28 +30,26 @@ const checked = computed<boolean>({
 @import "~@action/styles/theme.less";
 
 .phrase-checkbox {
-  width: 110px;
-  height: 40px;
+  width: 100%;
   display: block;
   cursor: pointer;
 
   &__wrap {
-    width: 110px;
-    height: 40px;
+    height: 36px;
     background: @white;
-    border: 1px solid rgba(95, 99, 104, 0.2);
+    border: 1px solid rgba(37, 37, 37, 0.2);
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: 6px;
     text-align: center;
 
     span {
       font-style: normal;
-      font-weight: 500;
+      font-weight: 400;
       font-size: 14px;
-      line-height: 38px;
+      line-height: 34px;
       text-align: center;
-      letter-spacing: 0.25px;
-      color: @primaryLabel;
+      letter-spacing: 0px;
+      color: @secondaryLabel;
     }
   }
 
@@ -68,7 +66,6 @@ const checked = computed<boolean>({
 
         span {
           color: @white;
-          line-height: 40px;
         }
       }
     }

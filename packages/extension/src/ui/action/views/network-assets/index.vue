@@ -6,31 +6,36 @@
         :settings="scrollSettings({ suppressScrollX: true })"
       >
         <div v-if="!!selected" class="network-assets">
-          <network-activity-total
-            :crypto-amount="cryptoAmount"
-            :fiat-amount="fiatAmount"
-            :symbol="network.currencyName"
-            :subnetwork="props.subnetwork"
-          />
-
-          <network-activity-action v-bind="$attrs" />
-          <network-assets-item
-            v-for="(item, index) in assets"
-            :key="index"
-            :token="item"
-          ></network-assets-item>
-          <div
-            v-show="network.customTokens && assets.length !== 0"
-            class="network-assets__add-token"
-          >
-            <div class="network-assets__add-token-button">
-              <base-button
-                title="Add custom token"
-                :click="toggleShowAddCustomTokens"
-                :no-background="true"
-              />
+            <network-activity-total
+                :crypto-amount="cryptoAmount"
+                :fiat-amount="fiatAmount"
+                :symbol="network.currencyName"
+                :subnetwork="props.subnetwork"
+            />
+            <div class="network-assets__bottom">
+                <network-activity-action v-bind="$attrs" />
+                <div class="network-assets__header">
+                    <p><Tokens />Tokens</p>
+                    <a @click="settingsAction"><Setting /></a>
+                </div>
+                <network-assets-item
+                    v-for="(item, index) in assets"
+                    :key="index"
+                    :token="item"
+                ></network-assets-item>
+                <div
+                    v-show="network.customTokens && assets.length !== 0"
+                    class="network-assets__add-token"
+                >
+                    <div class="network-assets__add-token-button">
+                        <base-button
+                            title="Add custom token"
+                            :click="toggleShowAddCustomTokens"
+                            :no-background="true"
+                        />
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
       </custom-scrollbar>
 
@@ -52,11 +57,19 @@
       @update:token-added="addCustomAsset"
       @update:close="toggleShowAddCustomTokens"
     ></custom-evm-token>
+
+    <settings
+      v-if="settingsShow"
+      @close:popup="settingsShow = !settingsShow"
+    />
+
   </div>
 </template>
 
 <script setup lang="ts">
 import { useRoute } from "vue-router";
+import Tokens from "@action/icons/actions/tokens.vue";
+import Setting from "@action/icons/actions/setting.vue";
 import NetworkActivityTotal from "../network-activity/components/network-activity-total.vue";
 import NetworkActivityAction from "../network-activity/components/network-activity-action.vue";
 import NetworkAssetsItem from "./components/network-assets-item.vue";
@@ -72,8 +85,10 @@ import Deposit from "@action/views/deposit/index.vue";
 import BaseButton from "@action/components/base-button/index.vue";
 import CustomEvmToken from "./components/custom-evm-token.vue";
 import { EvmNetwork } from "@/providers/ethereum/types/evm-network";
+import Settings from "@action/views/settings/index.vue";
 
 const showDeposit = ref(false);
+const settingsShow = ref(false);
 
 const route = useRoute();
 const props = defineProps({
@@ -148,6 +163,11 @@ const addCustomAsset = (asset: AssetsType) => {
     assets.value = [...assets.value, asset];
   }
 };
+
+const settingsAction = () => {
+  settingsShow.value = !settingsShow.value;
+};
+
 </script>
 
 <style lang="less" scoped>
@@ -157,7 +177,7 @@ const addCustomAsset = (asset: AssetsType) => {
 .container {
   width: 100%;
   height: 600px;
-  background-color: @white;
+  background-color: transparent;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.16);
   margin: 0;
   padding-top: 0;
@@ -178,9 +198,9 @@ const addCustomAsset = (asset: AssetsType) => {
     margin: auto;
     width: 100%;
     height: 100%;
-    max-height: 530px;
+    max-height: 600px;
     margin: 0;
-    padding: 68px 0 68px 0 !important;
+    padding: 56px 0 68px 0 !important;
     box-sizing: border-box;
 
     &.ps--active-y {
@@ -188,15 +208,40 @@ const addCustomAsset = (asset: AssetsType) => {
     }
   }
 
+	&__bottom {
+		padding: 10px;
+		box-sizing: border-box;
+	}
+
   &__add-token {
     position: relative;
-    margin: 0px 12px 0px 166px;
+    margin: 0px 20px 0px 20px;
     z-index: 0;
 
     &-button {
       width: 156px;
+      margin: 0px auto;
     }
   }
+
+  &__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		p {
+			font-size: 14px;
+			background-color: @white;
+			border-radius: 4px;
+			padding: 5px;
+			display: flex;
+			align-items: center;
+			column-gap: 5px;
+			margin: 0px;
+		}
+    a {
+      cursor: pointer;
+    }
+	}
 }
 </style>
 

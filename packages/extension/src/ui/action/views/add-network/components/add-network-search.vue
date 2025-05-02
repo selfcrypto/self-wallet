@@ -76,10 +76,9 @@ onClickOutside(tooltip, () => {
 .add-network {
   &__search {
     width: 100%;
-    height: 56px;
-    background: @white;
+    height: auto;
+    background: transparent;
     box-sizing: border-box;
-    padding: 8px 0 8px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -92,11 +91,16 @@ onClickOutside(tooltip, () => {
     }
 
     &-add {
-      width: 40px;
+      width: 39px;
+      height: 39px;
       font-size: 0;
-      border-radius: 8px;
+      border-radius: 6px;
       transition: background 300ms ease-in-out;
-
+      background-color: @white;
+      border: 0.5px solid #CBCBCBB2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       &:hover {
         background: @black007;
       }

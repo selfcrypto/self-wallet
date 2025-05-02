@@ -65,33 +65,33 @@ const toggleVisibility = () => {
 @import "~@action/styles/theme.less";
 .base-input {
   outline: none;
-  background: @white;
-  border: 1px solid rgba(95, 99, 104, 0.2);
-  border-radius: 10px;
+  background: transparent;
+  border: 1px solid rgba(37, 37, 37, 0.8);
+  border-radius: 6px;
   margin: 0;
   padding: 0 40px 0 12px;
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
-  line-height: 40px;
-  letter-spacing: 0.25px;
+  font-size: 16px;
+  line-height: 54px;
+  letter-spacing: 0px;
   color: @primaryLabel;
   width: 100%;
   box-sizing: border-box;
   &:focus {
-    border: 2px solid @primary;
-    line-height: 38px;
+    border: 1px solid @primary;
+    line-height: 54px;
   }
   &.error {
-    border: 2px solid @error;
-    line-height: 38px;
+    border: 1px solid @error;
+    line-height: 54px;
   }
   &__wrap {
     position: relative;
   }
   &__hide {
     position: absolute;
-    top: 12px;
+    top: 20px;
     right: 12px;
     cursor: pointer;
     &:active {

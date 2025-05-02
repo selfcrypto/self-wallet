@@ -71,7 +71,7 @@ const deleteNetwork = async () => {
     align-items: center;
     flex-direction: row;
     width: 100%;
-    height: 44px;
+    height: auto;
   }
 
   &__text {
@@ -81,9 +81,9 @@ const deleteNetwork = async () => {
     flex-direction: row;
 
     img {
-      width: 16px;
-      height: 16px;
-      margin-right: 8px;
+      width: 27px;
+      height: 27px;
+      margin-right: 16px;
     }
 
     span {

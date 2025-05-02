@@ -3,14 +3,17 @@
     <settings-header v-bind="$attrs" />
 
     <div class="settings__block">
-      <settings-button title="General" @click="$emit('action:general')" />
-      <settings-button
-        title="Contact support"
-        :is-link="true"
-        @click="contactSupport"
-      />
-      <settings-button title="About" @click="$emit('action:about')" />
-      <settings-button title="View my recovery phrase" @click="toggleSign" />
+      <logo-big class="settings__logo" />
+      <div class="settings__buttons">
+        <settings-button title="General" @click="$emit('action:general')" />
+        <settings-button
+          title="Contact support"
+          :is-link="true"
+          @click="contactSupport"
+        />
+        <settings-button title="About" @click="$emit('action:about')" />
+        <settings-button title="View my recovery phrase" @click="toggleSign" />
+      </div>
       <settings-button
         title="Reset wallet"
         :is-red="true"
@@ -36,8 +39,7 @@
     </div> -->
 
     <div class="settings__copyright">
-      <p>Version {{ version }} ({{ buildTime }})</p>
-      <p>© {{ new Date().getFullYear() }} by MyEtherWallet Inc.</p>
+      <p>Version {{ version }} ({{ buildTime }}) © {{ new Date().getFullYear() }} by MyEtherWallet Inc.</p>
     </div>
 
     <modal-sign
@@ -62,7 +64,7 @@ import SettingsHeader from "@action/views/settings/components/settings-header.vu
 import SettingsButton from "@action/views/settings/components/settings-button.vue";
 import ModalSign from "@action/views/modal-sign/index.vue";
 import ModalForgot from "@action/views/modal-forgot/index.vue";
-
+import LogoBig from "@action/icons/common/logo-icon.vue";
 const isOpenSign = ref(false);
 const isForgot = ref(false);
 const version = process.env.PACKAGE_VERSION;
@@ -107,15 +109,25 @@ const toggleForgot = () => {
 @import "~@action/styles/theme.less";
 
 .settings {
+  &__logo {
+    margin: 0px auto 50px;
+    display: block !important;
+  }
+  &__buttons {
+    padding: 12px 10px;
+    border: 0.5px solid #CBCBCBB2;
+    margin-bottom: 17px;
+    border-radius: 4px;
+  }
   &__copyright {
-    padding: 0 48px;
-
+    padding: 0px;
+    margin-top: 30px;
+    text-align: center;
     p {
       font-style: normal;
       font-weight: 400;
       font-size: 12px;
-      line-height: 16px;
-      letter-spacing: 0.5px;
+      line-height: 20px;
       color: @tertiaryLabel;
       margin: 0;
     }

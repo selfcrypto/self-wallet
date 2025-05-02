@@ -1,5 +1,6 @@
 <template>
   <div class="type-password">
+    <logo-big class="new-wallet__logo" />
     <h3 class="type-password__title">Confirm your password</h3>
     <p class="type-password__description">
       SelfCrypto is non-custodial. We cannot restore or reset your password for
@@ -28,6 +29,7 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref, computed } from "vue";
+import LogoBig from "@action/icons/common/logo-icon.vue";
 import BaseButton from "@action/components/base-button/index.vue";
 import BaseInput from "@action/components/base-input/index.vue";
 import { useRouter } from "vue-router";
@@ -72,16 +74,16 @@ onMounted(() => {
 @import "~@action/styles/theme.less";
 
 .type-password {
-  width: 100%;
-
+    width: 100%;
+  text-align: center;
   &__title {
     font-style: normal;
-    font-weight: 700;
-    font-size: 34px;
-    line-height: 40px;
-    letter-spacing: 0.25px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: normal;
+    letter-spacing: 0px;
     color: @primaryLabel;
-    margin: 0 0 8px 0;
+    margin: 0 0 21px 0;
   }
 
   &__description {
@@ -94,11 +96,19 @@ onMounted(() => {
   }
 
   &__form {
-    padding: 16px 0;
-
+    padding: 21px 0 12px;
     .button {
       margin-top: 16px;
     }
+  }
+
+  &__label {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: @primaryLabel;
+    margin: 0;
   }
 
   &__error {
@@ -108,17 +118,8 @@ onMounted(() => {
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
-    letter-spacing: 0.25px;
+    letter-spacing: 0px;
     color: @error;
-  }
-
-  &__label {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    color: @secondaryLabel;
-    margin: 0;
   }
 }
 </style>

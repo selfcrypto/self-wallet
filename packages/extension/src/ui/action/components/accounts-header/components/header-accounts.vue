@@ -213,31 +213,32 @@ const disconnectFromDapp = async () => {
     box-sizing: border-box;
     padding: 6px;
     padding-right: 32px;
-    border-radius: 10px;
-    height: 44px;
+    border-radius: 0px;
     cursor: pointer;
     transition: background 300ms ease-in-out;
-
+    background-color: #444346;
     &:hover,
     &.active {
       background: @black007;
     }
 
     img {
-      width: 32px;
-      height: 32px;
-      margin-right: 12px;
-      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      margin-right: 8px;
     }
 
     &-name {
+      display: flex;
+      align-items: center;
+			justify-content: center;
       p {
         font-style: normal;
-        font-weight: 500;
+        font-weight: 400;
         font-size: 14px;
         line-height: 20px;
-        letter-spacing: 0.25px;
-        color: @primaryLabel;
+        letter-spacing: 0px;
+        color: @white;
         margin: 0;
         white-space: nowrap;
         -ms-text-overflow: ellipsis;
@@ -247,7 +248,7 @@ const disconnectFromDapp = async () => {
         -ms-line-clamp: 1;
         -webkit-line-clamp: 1;
         line-clamp: 1;
-        max-width: 230px;
+        max-width: 60px;
       }
 
       span {
@@ -256,14 +257,14 @@ const disconnectFromDapp = async () => {
         font-weight: normal;
         font-size: 12px;
         line-height: 16px;
-        color: @secondaryLabel;
+        color: @gray03;
         letter-spacing: 0.5px;
       }
     }
 
     svg {
       position: absolute;
-      top: 10px;
+      top: 4px;
       right: 4px;
     }
   }
@@ -290,7 +291,12 @@ const disconnectFromDapp = async () => {
       border-radius: 8px;
       cursor: pointer;
       transition: background 300ms ease-in-out;
-
+			opacity: 0.5;
+      svg, 
+      path {
+        color: @gray03;
+        fill: @gray03;
+      }
       &:hover {
         background: @black007;
       }

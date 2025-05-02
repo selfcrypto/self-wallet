@@ -278,30 +278,28 @@ const sendAction = async () => {
 
   &__inner-header {
     width: 100%;
-    height: 56px;
-    background: @white;
     box-sizing: border-box;
-    padding: 14px 56px 14px 56px;
-    margin-bottom: 32px;
+    padding: 0px;
+    position: relative;
+    z-index: 4;
+    margin-bottom: 45px;
 
     h3 {
       font-style: normal;
-      font-weight: bold;
+      font-weight: 500;
       font-size: 20px;
-      line-height: 28px;
+      line-height: 24px;
       margin: 0;
       color: @primaryLabel;
       text-align: center;
     }
   }
-
-  &__back {
+  &__close {
     position: absolute;
-    top: 8px;
-    left: 8px;
+    top: -8px;
+    right: -8px;
     border-radius: 8px;
     cursor: pointer;
-    padding: 8px;
     font-size: 0;
     transition: background 300ms ease-in-out;
 
@@ -309,15 +307,14 @@ const sendAction = async () => {
       background: @black007;
     }
   }
-
-  &__close {
+  &__back {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 0px;
+    left: 0px;
     border-radius: 8px;
     cursor: pointer;
+    padding: 0px;
     font-size: 0;
-    transition: background 300ms ease-in-out;
 
     &:hover {
       background: @black007;
@@ -326,7 +323,7 @@ const sendAction = async () => {
 
   &__custom {
     &-block {
-      padding: 0 32px 16px 32px;
+      padding: 0 0px 16px;
 
       &.double {
         display: flex;
@@ -345,7 +342,7 @@ const sendAction = async () => {
     }
 
     &-button {
-      padding: 24px 32px 24px 32px;
+      padding: 16px;
       position: absolute;
       left: 0;
       bottom: 0;

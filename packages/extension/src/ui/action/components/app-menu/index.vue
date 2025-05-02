@@ -81,7 +81,7 @@ const searchNetworks = computed({
     position: relative;
     margin: auto;
     width: 100%;
-    max-height: 432px;
+    max-height: 370px;
 
     &.ps--active-y {
       padding-right: 0 !important;

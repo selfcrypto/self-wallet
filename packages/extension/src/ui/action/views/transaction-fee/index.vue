@@ -127,21 +127,23 @@ const closepopup = () => {
     left: 0;
     top: 0;
     z-index: 102;
+    background-color: @black;
+    opacity: 0.8;
   }
 
   &__wrap {
     position: absolute;
-    width: 428px;
+    width: 100%;
     height: auto;
     max-height: 440px;
-    left: 16px;
+    left: 0px;
     bottom: 100px;
-    background: #ffffff;
+    background: @gray03;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.039),
       0px 7px 24px rgba(0, 0, 0, 0.19);
     border-radius: 12px;
     z-index: 103;
-    padding: 16px 0 0 0;
+    padding: 16px;
     box-sizing: border-box;
     opacity: 0;
     visibility: hidden;
@@ -155,15 +157,15 @@ const closepopup = () => {
     }
 
     &.header {
-      padding: 0;
+      padding: 16px;
       max-height: 512px;
-      bottom: 52px;
+      bottom: 0px;
     }
   }
 
   &__info {
     margin-bottom: 16px;
-    padding: 0 20px;
+    padding: 0px;
     position: relative;
 
     &-amount {
@@ -171,13 +173,13 @@ const closepopup = () => {
       justify-content: flex-start;
       align-items: center;
       flex-direction: row;
-
+      margin-bottom: 5px;
       &-fiat {
         font-style: normal;
-        font-weight: 400;
-        font-size: 20px;
-        line-height: 28px;
-        letter-spacing: 0.15px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: 0px;
         color: @primaryLabel;
         margin: 0;
         margin-right: 8px;
@@ -185,9 +187,9 @@ const closepopup = () => {
 
       &-crypto {
         font-style: normal;
-        font-weight: 400;
+        font-weight: 500;
         font-size: 16px;
-        line-height: 24px;
+        line-height: 20px;
         color: @secondaryLabel;
         margin: 0;
 
@@ -208,8 +210,8 @@ const closepopup = () => {
 
     &-time {
       position: absolute;
-      right: 20px;
-      top: 4px;
+      right: 0px;
+      top: 0px;
       display: flex;
       justify-content: flex-start;
       align-items: center;
@@ -217,9 +219,9 @@ const closepopup = () => {
 
       span {
         font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 24px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
         color: @primaryLabel;
       }
 
@@ -231,18 +233,17 @@ const closepopup = () => {
 
   &__header {
     width: 100%;
-    background: @white;
     box-sizing: border-box;
-    padding: 14px 84px 14px 16px;
+    padding: 0px;
     position: relative;
     z-index: 4;
-    margin-bottom: 16px;
+    margin-bottom: 40px;
 
     h3 {
       font-style: normal;
-      font-weight: bold;
-      font-size: 24px;
-      line-height: 32px;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 24px;
       margin: 0;
       color: @primaryLabel;
     }
@@ -250,8 +251,8 @@ const closepopup = () => {
 
   &__close {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: -8px;
+    right: -8px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 0;

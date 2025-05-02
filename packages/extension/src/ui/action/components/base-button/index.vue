@@ -7,6 +7,7 @@
       gray: gray,
       red: red,
       orange: orange,
+      border: border,
     }"
     @click="click()"
   >
@@ -41,6 +42,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  border: {
+    type: Boolean,
+    default: false,
+  }
 });
 </script>
 
@@ -49,17 +54,15 @@ defineProps({
 
 .button {
   background-color: @primary;
-  box-shadow: 0px 0.25px 1px rgba(0, 0, 0, 0.039),
-    0px 0.85px 3px rgba(0, 0, 0, 0.19);
-  border-radius: 10px;
+  border-radius: 6px;
   display: inline-block;
   width: 100%;
-  height: 40px;
+  height: 56px;
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 40px;
-  letter-spacing: 0.5px;
+  font-size: 16px;
+  line-height: 56px;
+  letter-spacing: 0px;
   color: @white;
   text-align: center;
   cursor: pointer;
@@ -115,6 +118,19 @@ defineProps({
 
     &::after {
       background: rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  &.border {
+    border: 1px solid @primary;
+    height: 54px;
+    line-height: 54px;
+    color: @primary;
+    &.disabled {
+        background: transparent !important;
+    }
+    &::after {
+      background: transparent !important;
     }
   }
 

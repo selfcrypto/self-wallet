@@ -153,7 +153,7 @@ const close = () => {
   }
 
   &__container {
-    width: 800px;
+    width: 100%;
     height: 600px;
     left: 0;
     top: 0px;

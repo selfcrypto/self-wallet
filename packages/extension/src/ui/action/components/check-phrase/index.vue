@@ -49,14 +49,17 @@ const onChecked = (key: number, val: boolean) => {
 
 .check-phrase {
   width: 100%;
-  margin-bottom: 16px;
-
+  margin-bottom: 12px;
+  border: 1px solid rgba(37, 37, 37, 0.2);
+  padding: 8px 15px 15px;
+  box-sizing: border-box;
+  border-radius: 6px;
   p {
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
-    letter-spacing: 0.25px;
+    letter-spacing: 0px;
     color: @secondaryLabel;
     margin: 0 0 8px 0;
   }
@@ -66,6 +69,7 @@ const onChecked = (key: number, val: boolean) => {
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
+    column-gap: 15px;
   }
 }
 </style>

@@ -135,9 +135,9 @@ const close = () => {
   position: fixed;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.039), 0px 7px 24px rgba(0, 0, 0, 0.19);
   border-radius: 12px;
-  width: 428px;
+  width: 400px;
   height: 568px;
-  left: 356px;
+  left: 0;
   top: 16px;
   z-index: 12;
 

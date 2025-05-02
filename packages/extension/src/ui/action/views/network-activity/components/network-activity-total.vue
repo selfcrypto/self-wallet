@@ -42,14 +42,14 @@ defineProps({
 
 .network-activity {
   &__total {
-    padding: 0 20px 12px 20px;
-
+    padding: 10px 20px 12px 20px;
+    background-color: @primaryLabel;
     h3 {
       font-style: normal;
       font-weight: 700;
       font-size: 24px;
       line-height: 32px;
-      color: @primaryLabel;
+      color: @white;
       margin: 0;
 
       span {
@@ -62,7 +62,7 @@ defineProps({
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
-      color: @secondaryLabel;
+      color: @white;
       margin: 0;
     }
   }

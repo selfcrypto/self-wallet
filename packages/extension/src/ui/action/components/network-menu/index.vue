@@ -62,9 +62,9 @@ defineProps({
 
 .network-menu {
   position: absolute;
-  width: 460px;
+  width: 100%;
   height: 56px;
-  left: 340px;
+  left: 0;
   bottom: 0;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(50px);

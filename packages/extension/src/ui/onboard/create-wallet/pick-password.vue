@@ -1,5 +1,6 @@
 <template>
   <div class="pick-password">
+    <logo-big class="new-wallet__logo" />
     <h3 class="pick-password__title">Pick a password</h3>
     <p class="pick-password__description">
       This will be used to unlock your wallet.
@@ -14,13 +15,13 @@
     </div>
 
     <p class="pick-password__label">
-      Best passwords are long and contain letters, numbers and special
-      characters.
+      Best passwords are long and contain letters, numbers and special characters.
     </p>
   </div>
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
+import LogoBig from "@action/icons/common/logo-icon.vue";
 import BaseButton from "@action/components/base-button/index.vue";
 import PasswordInput from "@action/components/password-input/index.vue";
 import { useRouter } from "vue-router";
@@ -54,15 +55,15 @@ const passwordUpdated = (info: { password: string; strength: number }) => {
 
 .pick-password {
   width: 100%;
-
+  text-align: center;
   &__title {
     font-style: normal;
-    font-weight: 700;
-    font-size: 34px;
-    line-height: 40px;
-    letter-spacing: 0.25px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: normal;
+    letter-spacing: 0px;
     color: @primaryLabel;
-    margin: 0 0 8px 0;
+    margin: 0 0 21px 0;
   }
 
   &__description {
@@ -75,7 +76,7 @@ const passwordUpdated = (info: { password: string; strength: number }) => {
   }
 
   &__form {
-    padding: 16px 0;
+    padding: 21px 0 12px;
   }
 
   &__label {
@@ -83,7 +84,7 @@ const passwordUpdated = (info: { password: string; strength: number }) => {
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
-    color: @secondaryLabel;
+    color: @primaryLabel;
     margin: 0;
   }
 }

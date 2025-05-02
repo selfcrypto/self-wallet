@@ -3,7 +3,11 @@
     <div v-if="isLoading" class="app__loading">
       <swap-looking-animation />
     </div>
-    <div v-show="!isLoading" ref="appMenuRef" class="app__menu">
+    
+    <div v-show="isMenuVisible" ref="appMenuRef" class="app__menu">    
+      <a class="app__menu-close" @click="closeSidebarMenu">
+        <close-icon />
+      </a>  
       <logo-min class="app__menu-logo" />
       <base-search
         :value="searchInput"
@@ -61,15 +65,16 @@
             @update:init="init"
             @toggle:deposit="toggleDepositWindow"
             @open:buy-action="openBuyPage"
+            @showSidebarMenu="showSidebarMenu"
           />
         </transition>
       </router-view>
 
-      <network-menu
+      <!-- <network-menu
         v-show="showNetworkMenu"
         :selected="(route.params.id as string)"
         :network="currentNetwork"
-      />
+      /> -->
     </div>
 
     <add-network
@@ -143,6 +148,8 @@ import { trackBuyEvents, trackNetworkSelected } from "@/libs/metrics";
 import { getLatestEnkryptVersion } from "@action/utils/browser";
 import { gt as semverGT } from "semver";
 import { BuyEventType, NetworkChangeEvents } from "@/libs/metrics/types";
+import AppMenuWrapper from './components/app-menu-container/index.vue';
+import CloseIcon from "@action/icons/common/close-icon.vue";
 
 const domainState = new DomainState();
 const networksState = new NetworksState();
@@ -176,6 +183,14 @@ const toggle = ref(null);
 const isLoading = ref(true);
 const currentVersion = process.env.PACKAGE_VERSION as string;
 const latestVersion = ref("");
+const isMenuVisible = ref(false);
+
+const showSidebarMenu = () => {
+  isMenuVisible.value = true;
+};
+const closeSidebarMenu = () => {
+  isMenuVisible.value = false;
+}
 
 const setActiveNetworks = async () => {
   const activeNetworkNames = await networksState.getActiveNetworkNames();
@@ -490,7 +505,7 @@ body {
   font-family: "Roboto", sans-serif;
 }
 .app {
-  width: 800px;
+  width: 400px;
   height: 600px;
   overflow: hidden;
   position: relative;
@@ -501,7 +516,7 @@ body {
   transition: width 0.3s ease-in, height 0.3s ease-in;
 
   &__loading {
-    width: 800px;
+    width: 400px;
     height: 600px;
     display: flex;
     flex-direction: row;
@@ -529,11 +544,24 @@ body {
     top: 0;
     padding: 16px 12px 8px 12px;
     box-sizing: border-box;
-    z-index: 1;
+    z-index: 3;
     background: @defaultGradient;
 
+    &-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 300ms ease-in-out;
+      font-size: 0;
+      &:hover {
+        background: @black007;
+      }
+    }
+    
     &-logo {
-      margin-left: 8px;
+      margin-left: 0px;
     }
 
     &-footer {
@@ -647,10 +675,11 @@ body {
   }
 
   &__content {
-    width: 460px;
+    width: 100%;
     height: 600px;
     position: relative;
-    padding-left: 340px;
+    padding-left: 0px;
+    background: @gray03;
   }
 }
 .slide-left-enter-active,

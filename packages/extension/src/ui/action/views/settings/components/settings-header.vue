@@ -22,30 +22,30 @@ defineEmits<{
 .settings {
   &__header {
     width: 100%;
-    height: 68px;
-    background: @white;
     box-sizing: border-box;
-    padding: 24px 72px 12px 32px;
-    margin-bottom: 8px;
+    padding: 0px;
+    position: relative;
+    z-index: 4;
+    margin-bottom: 45px;
 
     h2 {
       font-style: normal;
-      font-weight: bold;
-      font-size: 24px;
-      line-height: 32px;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 24px;
       margin: 0;
       color: @primaryLabel;
+      text-align: center;
     }
   }
-
   &__close {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: -8px;
+    right: -8px;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 300ms ease-in-out;
     font-size: 0;
+    transition: background 300ms ease-in-out;
 
     &:hover {
       background: @black007;

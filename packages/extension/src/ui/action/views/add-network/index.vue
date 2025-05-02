@@ -52,22 +52,22 @@ const toNetworkList = () => {
   box-sizing: border-box;
 
   &__wrap {
-    background: @white;
+    background: @gray03;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.039),
       0px 7px 24px rgba(0, 0, 0, 0.19);
     border-radius: 12px;
     box-sizing: border-box;
-    width: 460px;
-    height: auto;
+    width: 100%;
     z-index: 107;
     position: relative;
-    height: 568px;
+    height: 100%;
     overflow-x: hidden;
+    padding: 16px;
   }
 
   &__container {
-    width: 800px;
-    height: 600px;
+    width: 100%;
+    height: 100%;
     left: 0px;
     top: 0px;
     position: fixed;

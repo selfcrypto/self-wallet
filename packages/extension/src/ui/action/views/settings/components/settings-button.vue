@@ -40,14 +40,14 @@ defineProps({
 @import "~@action/styles/theme.less";
 
 .settings-button {
-  height: 48px;
+  height: auto;
   background: #ffffff;
-  margin: 0 32px 12px 32px;
+  margin: 0px 0px 10px;
   box-sizing: border-box;
-  border: 1px solid @gray02;
+  border: 0.5px solid #CBCBCBB2;
   box-sizing: border-box;
-  border-radius: 10px;
-  width: calc(~"100% - 64px");
+  border-radius: 6px;
+  width: 100%;
   padding: 12px 16px;
   display: block;
   position: relative;
@@ -70,9 +70,9 @@ defineProps({
   h5 {
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: @primaryLabel;
+    font-size: 14px;
+    line-height: 20px;
+    color: @secondaryLabel;
     width: 290px;
     margin: 0;
   }
@@ -80,18 +80,17 @@ defineProps({
   &__arrow {
     position: absolute;
     font-size: 0;
-    padding: 4px;
+    padding: 0px;
     right: 8px;
     top: 50%;
-    margin-top: -16px;
+    margin-top: -12px;
   }
 
   &.red {
-    background: @error01;
-    border: 1px solid @error01;
-
+    background: transparent;
+    border: 0.5px solid #CBCBCB;
     h5 {
-      color: @error;
+      color: @primary;
     }
 
     .settings-button__arrow {

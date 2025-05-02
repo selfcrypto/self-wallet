@@ -1,23 +1,28 @@
 <template>
   <div class="network-activity__action">
     <div class="network-activity__action-wrap">
-      <a class="network-activity__action-item" @click="$emit('toggle:deposit')">
-        <Deposit />Deposit
-      </a>
-      <div class="network-activity__action-divider" />
+			<a class="network-activity__action-item" @click="$emit('showSidebarMenu')">
+					<Networks />Netowkrs
+			</a>
+			<a class="network-activity__action-item" >
+					<Nft />NFT
+			</a>
+			<router-link
+					:to="{
+					name: 'send-transaction',
+					params: { id: route.params.id, isToken: 'true' },
+					}"
+					class="network-activity__action-item"
+			>
+					<Send />Send
+			</router-link>
+			<a class="network-activity__action-item" @click="$emit('toggle:deposit')">
+					<Deposit />Deposit
+			</a>
       <!-- <a class="network-activity__action-item" @click="$emit('open:buyAction')">
         <Buy />Buy/Sell
       </a> -->
       <!-- <div class="network-activity__action-divider" /> -->
-      <router-link
-        :to="{
-          name: 'send-transaction',
-          params: { id: route.params.id, isToken: 'true' },
-        }"
-        class="network-activity__action-item"
-      >
-        <Send />Send
-      </router-link>
       <!-- <div class="network-activity__action-divider" /> -->
       <!-- <router-link
         class="network-activity__action-item"
@@ -34,15 +39,17 @@
 
 <script setup lang="ts">
 import Deposit from "@action/icons/actions/deposit.vue";
-import Buy from "@action/icons/actions/buy.vue";
+import Nft from "@action/icons/actions/nft.vue";
 import Send from "@action/icons/actions/send.vue";
-import Swap from "@action/icons/actions/swap.vue";
+import Networks from "@action/icons/actions/networks.vue";
 import { useRoute } from "vue-router";
+import AppMenuContainer from "@action/components/app-menu-container/index.vue";
 const route = useRoute();
 
 defineEmits<{
   (e: "toggle:deposit"): void;
   (e: "open:buyAction"): void;
+  (e: "showSidebarMenu"): void;
 }>();
 </script>
 
@@ -51,22 +58,19 @@ defineEmits<{
 
 .network-activity {
   &__action {
-    padding: 0 12px 8px 12px;
+    padding-bottom: 11px;
     box-sizing: border-box;
 
     &-wrap {
       width: 100%;
-      height: 72px;
       left: 12px;
       top: 0px;
-      background: @actionBg;
-      border-radius: 12px;
       display: flex;
       justify-content: space-around;
       align-items: center;
       flex-direction: row;
-      padding: 4px;
       box-sizing: border-box;
+			column-gap: 8px;
     }
     &-item {
       display: block;
@@ -77,24 +81,25 @@ defineEmits<{
       font-size: 14px;
       line-height: 20px;
       text-align: center;
-      letter-spacing: 0.5px;
+      letter-spacing: 0px;
       color: @primaryLabel;
       cursor: pointer;
-      height: 64px;
+      height: 75px;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      min-width: 100px;
+      width: 100%;
       transition: background 300ms ease-in-out;
-      border-radius: 8px;
+      border-radius: 6px;
+			background: @white;
 
       &:hover {
         background: rgba(0, 0, 0, 0.04);
       }
 
       svg {
-        margin-bottom: 0;
+        margin-bottom: 5px;
       }
     }
     &-divider {

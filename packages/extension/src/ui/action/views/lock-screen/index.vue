@@ -4,19 +4,28 @@
       v-show="!isForgot && !isLocked && !isUnlocking"
       class="lock-screen__wrap"
     >
-      <logo-big class="lock-screen__logo" />
-      <h4>Unlock with password</h4>
-      <lock-screen-password-input
-        :is-error="isError"
-        :value="password"
-        @update:value="passwordChanged"
-        @keyup.enter="unlockAction"
-      />
-      <base-button
-        title="Unlock"
-        :click="unlockAction"
-        :disabled="isDisabled"
-      />
+      <div class="lock-screen__top">
+        <logo-big class="lock-screen__logo" />
+        <p>The revolutionary wallet for Ethereum and all EVM-compatible chains</p>
+      </div>  
+      <div class="lock-screen__bottom">
+        <h4>Unlock with password</h4>
+        <lock-screen-password-input
+            :is-error="isError"
+            :value="password"
+            @update:value="passwordChanged"
+            @keyup.enter="unlockAction"
+        />
+        <base-button
+            title="Unlock"
+            :click="unlockAction"
+            :disabled="isDisabled"
+        />
+        <base-button
+            title="Import wallet"
+            :no-background="true"
+        />
+      </div>
     </div>
 
     <div v-show="isUnlocking" class="lock-screen__unlocking">
@@ -30,14 +39,6 @@
     />
 
     <lock-screen-timer v-show="isLocked" :close="closeLockedAction" />
-
-    <base-button
-      v-show="!isForgot && !isUnlocking"
-      title="I forgot my password"
-      :click="forgotAction"
-      :no-background="true"
-      class="lock-screen__forgot"
-    />
   </div>
 </template>
 
@@ -118,7 +119,7 @@ const closeLockedAction = () => {
   height: 100%;
   box-sizing: border-box;
   &__container {
-    width: 800px;
+    width: 100%;
     height: 600px;
     //   width: 454px;
     //   height: 397px;
@@ -140,18 +141,43 @@ const closeLockedAction = () => {
     justify-content: center;
   }
   &__wrap {
-    width: 320px;
-    height: auto;
     box-sizing: border-box;
     position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
     h4 {
-      font-style: normal;
-      font-weight: 700;
-      font-size: 24px;
-      line-height: 32px;
-      color: @primaryLabel;
-      margin: 0 0 8px 0;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: normal;
+        letter-spacing: 0px;
+        color: @primaryLabel;
+        margin: 0 0 8px 0;
     }
+  }
+  &__top {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: @primaryLabel;
+    p {
+        color: @gray03;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
+        margin: 0;
+        max-width: 260px;
+    }
+  }
+  &__bottom {
+    padding: 20px 20px 0px;
   }
   &__unlocking {
     width: 300px;

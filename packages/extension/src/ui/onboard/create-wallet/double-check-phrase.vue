@@ -1,17 +1,21 @@
 <template>
   <div class="double-check-phrase">
-    <h3>Let's double check it</h3>
-
-    <check-phrase
-      v-for="(item, index) in phraseItems"
-      :id="item.id"
-      :key="index"
-      :phrases="item.items"
-      :valid-index="item.validIndex"
-      @update:phrasevalidity="updateSelection(index, $event)"
-    />
-
-    <base-button title="Next" :click="nextAction" :disabled="isDisabled" />
+    <div class="double-check-phrase__top">
+        <h3>Let's double check it</h3>
+        <div class="double-check-phrase__list">
+            <check-phrase
+            v-for="(item, index) in phraseItems"
+            :id="item.id"
+            :key="index"
+            :phrases="item.items"
+            :valid-index="item.validIndex"
+            @update:phrasevalidity="updateSelection(index, $event)"
+            />
+        </div>
+    </div>
+    <div class="double-check-phrase__bottom">
+        <base-button title="Next" :border="true" :click="nextAction" :disabled="isDisabled" :no-background="true" />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -68,16 +72,35 @@ const nextAction = () => {
 @import "~@action/styles/theme.less";
 
 .double-check-phrase {
-  width: 100%;
-
+    width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  &__top {
+    margin-top: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   h3 {
     font-style: normal;
-    font-weight: 700;
-    font-size: 34px;
-    line-height: 40px;
-    letter-spacing: 0.25px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: normal;
+    letter-spacing: 0px;
     color: @primaryLabel;
-    margin: 0 0 16px 0;
+    margin: 0;
+    position: absolute;
+    top: 16px;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    text-align: center;
+  }
+  &__list {
+    width: 100%;
   }
 }
 </style>

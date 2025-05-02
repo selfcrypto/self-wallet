@@ -74,14 +74,11 @@ const toggleAccounts = () => {
 
 .network-header {
   position: fixed;
-  width: 460px;
+  width: 100%;
   height: 56px;
-  left: 340px;
+  left: 0;
   top: 0;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(50px);
-  -webkit-backdrop-filter: blur(50px);
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.05), 0px 0px 1px rgba(0, 0, 0, 0.25);
+  background: @primaryLabel;
   z-index: 2;
 }
 </style>

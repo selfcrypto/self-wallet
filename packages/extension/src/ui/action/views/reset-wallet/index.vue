@@ -77,7 +77,7 @@ const resetAction = async () => {
 
 .reset-wallet {
   &__wrap {
-    padding: 0 32px;
+    padding: 0px;
     position: relative;
     height: 100%;
   }

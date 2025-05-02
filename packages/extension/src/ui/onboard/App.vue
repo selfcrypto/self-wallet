@@ -89,7 +89,7 @@ body {
     cursor: pointer;
     padding: 8px;
     transition: background 300ms ease-in-out;
-
+    z-index: 1;
     &:hover {
       background: @black007;
     }
@@ -107,12 +107,12 @@ body {
   }
 
   &__wrap {
-    width: 460px;
+    width: 400px;
     height: 600px;
-    background: @white;
+    background: @gray03;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.16);
     border-radius: 12px;
-    padding: 56px;
+    padding: 20px;
     box-sizing: border-box;
     position: relative;
     display: flex;
@@ -122,8 +122,7 @@ body {
     overflow: hidden;
 
     &--ready {
-      background: transparent;
-      box-shadow: none;
+        background: @primaryLabel;
     }
 
     &--auto-height {

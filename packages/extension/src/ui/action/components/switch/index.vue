@@ -44,7 +44,7 @@ const checkLocal = (e: any) => {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: @default;
+  background-color: @gray03;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -52,18 +52,21 @@ const checkLocal = (e: any) => {
 .slider:before {
   position: absolute;
   content: "";
-  height: 20px;
-  width: 20px;
-  left: 2px;
-  bottom: 2px;
-  background-color: @white;
+  height: 22px;
+  width: 22px;
+  left: 1px;
+  bottom: 1px;
+  background-color: #524D5B;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.05), 0px 0px 1px rgba(0, 0, 0, 0.25);
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: @success;
+  background-color: @primary;
+  &:before {
+    background: @white;
+  }
 }
 
 input:focus + .slider {

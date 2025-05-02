@@ -77,28 +77,28 @@ const select = () => {
   align-items: center;
   flex-direction: row;
   width: 100%;
-  height: 88px;
+  height: auto;
   cursor: pointer;
   text-decoration: none;
-  padding: 4px 8px;
+  padding: 0px;
   box-sizing: border-box;
   position: relative;
-
+  margin-top: 5px;
   &__block {
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: row;
-    height: 80px;
-    border-radius: 8px;
+    height: auto;
+    border-radius: 6px;
     width: 100%;
     transition: background 300ms ease-in-out;
-
+    padding: 10px;
     svg {
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       margin-right: 16px;
-      margin-left: 12px;
+      margin-left: 0px;
     }
 
     &-info {
@@ -106,18 +106,18 @@ const select = () => {
 
       h4 {
         font-style: normal;
-        font-weight: 400;
+        font-weight: 500;
         font-size: 16px;
-        line-height: 24px;
+        line-height: 20px;
         color: @primaryLabel;
-        margin: 0;
+        margin: 0px 0px 5px;
       }
 
       p {
         font-style: normal;
         font-weight: 400;
-        font-size: 12px;
-        line-height: 16px;
+        font-size: 14px;
+        line-height: 20px;
         color: @secondaryLabel;
         margin: 0;
       }
@@ -125,22 +125,22 @@ const select = () => {
 
     &-amount {
       font-style: normal;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 24px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
       text-align: right;
-      color: @success;
+      color: @primary;
       position: absolute;
-      right: 20px;
-      top: 16px;
+      right: 0px;
+      top: 10px;
 
       &.down {
-        color: @secondaryLabel;
+        color: @primary;
       }
     }
 
     &.active {
-      background-color: @black007;
+      background-color: @white;
 
       .transaction-fee-item__block-amount {
         display: none;
@@ -148,7 +148,7 @@ const select = () => {
     }
 
     &:hover {
-      background-color: @black007;
+      background-color: @white;
     }
   }
 }

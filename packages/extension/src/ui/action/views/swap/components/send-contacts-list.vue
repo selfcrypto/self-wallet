@@ -86,10 +86,10 @@ const pasteFromClipboard = () => {
 
   &__wrap {
     position: absolute;
-    width: 396px;
+    width: 100%;
     height: auto;
     max-height: 530px;
-    left: 32px;
+    left: 0px;
     top: 146px;
     background: #ffffff;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.039),

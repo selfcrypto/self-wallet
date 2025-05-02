@@ -26,24 +26,28 @@
 
       <div v-if="searchInput === ''">
         <h3 class="add-network__list-header">Popular</h3>
-        <add-network-item
-          v-for="(item, index) in popular"
-          :key="index"
-          :network="item"
-          :is-active="item.isActive"
-          @network-toggled="onToggle"
-        />
+        <div class="add-network__list-lists">
+          <add-network-item
+            v-for="(item, index) in popular"
+            :key="index"
+            :network="item"
+            :is-active="item.isActive"
+            @network-toggled="onToggle"
+          />
+        </div>
       </div>
       <h3 class="add-network__list-header">All networks</h3>
-      <add-network-item
-        v-for="item in searchAllNetworks"
-        :key="item.name"
-        :network="item"
-        :is-active="item.isActive"
-        :is-custom-network="(item as unknown as CustomEvmNetwork).isCustomNetwork"
-        @network-toggled="onToggle"
-        @network-deleted="onNetworkDeleted"
-      />
+      <div class="add-network__list-lists">
+        <add-network-item
+          v-for="item in searchAllNetworks"
+          :key="item.name"
+          :network="item"
+          :is-active="item.isActive"
+          :is-custom-network="(item as unknown as CustomEvmNetwork).isCustomNetwork"
+          @network-toggled="onToggle"
+          @network-deleted="onNetworkDeleted"
+        />
+      </div>
     </custom-scrollbar>
   </div>
 </template>
@@ -186,37 +190,26 @@ const isHasScroll = () => {
 
   &__header {
     width: 100%;
-    background: @white;
     box-sizing: border-box;
-    padding: 24px 72px 12px 32px;
+    padding: 0px;
     position: relative;
     z-index: 4;
+    margin-bottom: 23px;
 
     h3 {
       font-style: normal;
-      font-weight: bold;
-      font-size: 24px;
-      line-height: 32px;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 24px;
       margin: 0;
       color: @primaryLabel;
-    }
-
-    &.border {
-      box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.05),
-        0px 0px 1px rgba(0, 0, 0, 0.25);
-      padding: 14px 72px 12px 32px;
-
-      h3 {
-        font-size: 20px;
-        line-height: 28px;
-      }
+      text-align: center;
     }
   }
-
   &__close {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: -8px;
+    right: -8px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 0;
@@ -230,11 +223,20 @@ const isHasScroll = () => {
   &__list {
     &-header {
       font-style: normal;
-      font-weight: bold;
+      font-weight: 500;
       font-size: 16px;
       line-height: 24px;
       color: @primaryLabel;
-      margin: 8px 0 0 0;
+      margin: 10px 0;
+    }
+    &-lists {
+      background-color: @white;
+      border: 0.5px solid #CBCBCBB2;
+      border-radius: 6px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      row-gap: 10px;
     }
   }
 
@@ -245,7 +247,7 @@ const isHasScroll = () => {
     max-height: 500px;
     min-height: 250px;
     margin: 0;
-    padding: 0 32px !important;
+    padding: 0px !important;
     box-sizing: border-box;
 
     &.ps--active-y {

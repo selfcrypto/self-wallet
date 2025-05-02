@@ -2,12 +2,15 @@
   <div class="deposit" :class="{ show: showDeposit }">
     <div class="deposit__overlay" @click="$emit('toggle:deposit')" />
     <div class="deposit__wrap" :class="{ show: showDeposit }">
-      <a class="deposit__close" @click="$emit('toggle:deposit')">
-        <close-icon />
-      </a>
-
-      <img class="deposit__logo" :src="network.icon" />
-
+      <div class="deposit__header">
+        <h3>Deposit</h3>
+        <a class="deposit__close" @click="$emit('toggle:deposit')">
+          <close-icon />
+        </a>
+      </div>
+      <div class="deposit__logo">
+        <img :src="network.icon" />
+      </div>
       <h2>Your {{ network.name_long }} address</h2>
       <p>
         {{ depositCopy }}
@@ -24,15 +27,19 @@
           level="H"
         />
       </div>
-
+      <div class="deposit__username">
+        <p>@example</p>
+      </div>
       <div class="deposit__account">
-        <img
-          :src="network.identicon(network.displayAddress(account.address))"
-        />
+        <div class="deposit__account-detail">
+          <img
+            :src="network.identicon(network.displayAddress(account.address))"
+          />
 
-        <div class="deposit__account-info">
-          <h4>{{ account.name }}</h4>
-          <p>{{ network.displayAddress(account.address) }}</p>
+          <div class="deposit__account-info">
+            <h4>{{ account.name }}</h4>
+            <p>{{ network.displayAddress(account.address) }}</p>
+          </div>
         </div>
 
         <a
@@ -115,9 +122,9 @@ const depositCopy = computed(() => {
 @import "~@action/styles/theme.less";
 
 .deposit {
-  width: 800px;
-  height: 600px;
-  left: -340px;
+  width: 100%;
+  height: 100%;
+  left: 0px;
   top: 0px;
   position: fixed;
   z-index: 105;
@@ -126,7 +133,7 @@ const depositCopy = computed(() => {
   justify-content: center;
   align-items: center;
   flex-direction: row;
-
+  text-align: center;
   &.show {
     display: flex;
   }
@@ -141,21 +148,39 @@ const depositCopy = computed(() => {
     z-index: 106;
   }
 
+  &__header {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0px;
+    position: relative;
+    z-index: 4;
+    margin-bottom: 40px;
+
+    h3 {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 24px;
+      margin: 0;
+      color: @primaryLabel;
+    }
+  }
+
   &__wrap {
-    width: 360px;
-    background: @white;
+    width: 100%;
+    height: 100%;
+    background: @gray03;
     box-shadow: 0px 0.5px 5px rgba(0, 0, 0, 0.039),
       0px 3.75px 11px rgba(0, 0, 0, 0.19);
     border-radius: 12px;
     position: relative;
     z-index: 107;
     overflow: hidden;
-    padding: 20px;
+    padding: 16px;
     box-sizing: border-box;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s, visibility 0s ease-in-out 0.3s;
-
     &.show {
       opacity: 1;
       visibility: visible;
@@ -164,29 +189,27 @@ const depositCopy = computed(() => {
 
     h2 {
       font-style: normal;
-      font-weight: 700;
+      font-weight: 500;
       font-size: 20px;
-      line-height: 28px;
-      letter-spacing: 0.15px;
-      color: @primaryLabel;
+      line-height: 30px;
+      color: @secondaryLabel;
       margin: 0;
     }
 
     p {
       font-style: normal;
       font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-      letter-spacing: 0.25px;
-      color: @primaryLabel;
-      margin: 0 0 24px 0;
+      font-size: 16px;
+      line-height: 24px;
+      color: @secondaryLabel;
+      margin: 0 0 20px 0;
     }
   }
 
   &__close {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: -8px;
+    right: -8px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 0;
@@ -198,23 +221,33 @@ const depositCopy = computed(() => {
   }
 
   &__logo {
-    display: block;
-    height: 32px;
-    width: 32px;
-    margin-bottom: 4px;
+    width: 63px;
+    height: 63px;
+    background: linear-gradient(179.38deg, #5D70ED 0.54%, #354087 169.1%);
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px auto 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    img {
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
   }
 
   &__code {
-    width: 176px;
-    height: 176px;
+    width: 230px;
+    height: 210px;
     background: @white;
-    box-shadow: 0px 0.25px 1px rgba(0, 0, 0, 0.039),
-      0px 0.85px 3px rgba(0, 0, 0, 0.19);
-    border-radius: 16px;
-    margin: 0 0 24px 71px;
-    padding: 14px;
+    border-radius: 6px;
+    padding: 24px;
     box-sizing: border-box;
-
+    border: 0.5px solid #CBCBCBB2;
+    margin: 0px auto;
+    box-shadow: 0px 0px 2.3px 11px #00000008 inset;
     img {
       max-width: 148px;
     }
@@ -225,53 +258,65 @@ const depositCopy = computed(() => {
     justify-content: flex-start;
     align-items: center;
     flex-direction: row;
-
+    border: 0.5px solid #CBCBCBB2;
+    padding: 7px 10px;
+    border-radius: 4px;
     img {
-      max-width: 32px;
-      margin-right: 16px;
-      border-radius: 100%;
+      max-width: 21px;
+      margin-right: 10px;
     }
 
+    &-detail {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex: 1;
+    }
     &-info {
-      margin-right: 16px;
-
+      text-align: left;
       h4 {
         font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
+        font-weight: 400;
+        font-size: 16px;
         line-height: 20px;
-        letter-spacing: 0.25px;
-        color: @primaryLabel;
+        color: @secondaryLabel;
         margin: 0;
+        max-width: 60px;
+        white-space: nowrap;
+        -ms-text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
 
       p {
         font-style: normal;
         font-weight: 400;
         font-size: 12px;
-        line-height: 16px;
-        letter-spacing: 0.5px;
+        line-height: 14px;
         color: @secondaryLabel;
         margin: 0;
         max-width: 190px;
         word-break: break-all;
+        opacity: 0.5;
+        white-space: nowrap;
+        -ms-text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
     }
 
     &-copy {
-      padding: 4px 8px 4px 4px;
+      padding: 5px 12px;
       box-sizing: border-box;
-      height: 24px;
-      display: block;
-      background: @buttonBg;
-      border-radius: 6px;
+      background: @white;
+      border-radius: 4px;
       text-decoration: none;
       font-style: normal;
-      font-weight: 500;
-      font-size: 11px;
+      font-size: 12px;
       line-height: 16px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
+      text-transform: capitalize;
       color: @primaryLabel;
       display: flex;
       justify-content: flex-start;
@@ -279,7 +324,6 @@ const depositCopy = computed(() => {
       flex-direction: row;
       cursor: pointer;
       transition: opacity 300ms ease-in-out;
-
       &:hover {
         opacity: 0.8;
       }
@@ -295,6 +339,15 @@ const depositCopy = computed(() => {
     position: absolute;
     left: 117px;
     bottom: 16px;
+  }
+  &__username {
+    margin: 12px 0px;
+    p {
+      font-size: 14px;
+      line-height: 20px;
+      color: @primaryLabel;
+      margin: 0px;
+    }
   }
 }
 </style>

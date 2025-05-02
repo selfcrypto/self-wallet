@@ -60,18 +60,16 @@ const textValue = computed({
 
 .app-search {
   background: transparent;
-  border-radius: 10px;
+  border-radius: 4px;
   margin: 17px 0 8px 0;
-  height: 40px;
+  height: 41px;
   width: 100%;
   position: relative;
   padding-left: 40px;
   padding-right: 40px;
   box-sizing: border-box;
-  border: 1px solid @gray02;
-
   &.border {
-    border: 1px solid @gray02 !important;
+    border: 0.5px solid #CBCBCBB2 !important;
     box-shadow: none !important;
     margin: 0;
     background: @white;
@@ -95,15 +93,14 @@ const textValue = computed({
     border: 0 none;
     font-style: normal;
     font-weight: normal;
-    font-size: 14px;
-    line-height: 38px;
-    letter-spacing: 0.25px;
+    font-size: 12px;
+    line-height: 41px;
     background: none;
     color: @primaryLabel;
     width: 100%;
-
+    padding: 0px;
     &.border {
-      line-height: 38px;
+      line-height: 40px;
     }
 
     &::placeholder {

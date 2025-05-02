@@ -1,0 +1,15 @@
+<template>
+  <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g opacity="0.7">
+        <path d="M14.5 6.25H7.75C6.92157 6.25 6.25 6.92157 6.25 7.75V14.5C6.25 15.3284 6.92157 16 7.75 16H14.5C15.3284 16 16 15.3284 16 14.5V7.75C16 6.92157 15.3284 6.25 14.5 6.25Z" stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3.25 10.75H2.5C2.10217 10.75 1.72064 10.592 1.43934 10.3107C1.15804 10.0294 1 9.64782 1 9.25V2.5C1 2.10217 1.15804 1.72064 1.43934 1.43934C1.72064 1.15804 2.10217 1 2.5 1H9.25C9.64782 1 10.0294 1.15804 10.3107 1.43934C10.592 1.72064 10.75 2.10217 10.75 2.5V3.25" stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </svg>
+</template>
+
+<style scoped>
+svg {
+  display: inline-block;
+  vertical-align: baseline;
+}
+</style>

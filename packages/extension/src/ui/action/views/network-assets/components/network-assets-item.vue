@@ -4,7 +4,14 @@
       class="network-assets__token-info"
       :class="{ max: token.priceChangePercentage == 0 }"
     >
-      <img :src="token.icon" />
+        <div class="network-assets__token-icon">
+            <div class="network-assets__token-icon-main">
+                <Eth />
+            </div>
+            <div class="network-assets__token-icon-small">
+                <img :src="token.icon" />
+            </div>
+        </div>
       <div class="network-assets__token-info-name">
         <h4 v-if="token.name.length <= 16">{{ token.name }}</h4>
         <tooltip v-else :text="token.name"
@@ -57,6 +64,7 @@
 
 <script setup lang="ts">
 import { PropType, ref } from "vue";
+import Eth from "@action/icons/actions/eth.vue";
 import SparklineUp from "@action/icons/asset/sparkline-up.vue";
 import SparklineDown from "@action/icons/asset/sparkline-down.vue";
 import AssetDetailView from "@action/views/asset-detail-view/index.vue";
@@ -139,8 +147,8 @@ const toggleDetail = () => {
 }
 .network-assets {
   &__token {
-    height: 72px;
-    padding: 0 20px;
+    height: 65px;
+    padding: 0 10px;
     position: relative;
     box-sizing: border-box;
     display: flex;
@@ -150,13 +158,30 @@ const toggleDetail = () => {
     border-radius: 10px;
     transition: background 300ms ease-in-out;
     text-decoration: none;
-    margin: 0 12px;
+    margin-top: 10px;
     cursor: pointer;
-
+    background: @white;
     &:hover {
       background: rgba(0, 0, 0, 0.04);
     }
-
+    &-icon {
+        position: relative;
+        width: 60px;
+        &-main {
+            border: 1px solid @gray03;
+            border-radius: 100%;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            height: 45px;
+            width: 45px;
+        }
+        &-small {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
+    }
     &-info {
       display: flex;
       justify-content: flex-start;
@@ -164,15 +189,14 @@ const toggleDetail = () => {
       flex-direction: row;
       width: 190px;
       overflow: hidden;
-
+      column-gap: 10px;
       &.max {
         min-width: 190px;
         width: auto;
       }
 
       img {
-        max-width: 32px;
-        margin-right: 16px;
+        max-width: 27px;
         border-radius: 100%;
         box-shadow: inset 0px 0px 1px rgba(0, 0, 0, 0.16);
       }
@@ -180,23 +204,23 @@ const toggleDetail = () => {
       &-name {
         h4 {
           font-style: normal;
-          font-weight: 400;
+          font-weight: 500;
           font-size: 16px;
           line-height: 24px;
-          color: @primaryLabel;
+          color: @secondaryLabel;
           margin: 0 0 1px 0;
           white-space: nowrap;
-          width: 132px;
+          width: 90px;
           text-overflow: ellipsis;
           overflow: hidden;
         }
 
         p {
           font-style: normal;
-          font-weight: 400;
-          font-size: 12px;
-          line-height: 16px;
-          letter-spacing: 0.5px;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 21px;
+          letter-spacing: 0px;
           color: @secondaryLabel;
           margin: 0;
           display: flex;
@@ -204,10 +228,10 @@ const toggleDetail = () => {
           align-items: center;
           flex-direction: row;
           white-space: nowrap;
-          width: 132px;
+          width: 90px;
           overflow: hidden;
           text-overflow: ellipsis;
-
+          opacity: 0.5;
           span {
             margin-left: 4px;
             text-transform: uppercase;
@@ -217,7 +241,7 @@ const toggleDetail = () => {
         &.max {
           h4,
           p {
-            min-width: 132px;
+            min-width: 90px;
             max-width: 100%;
             width: auto;
           }
@@ -260,17 +284,17 @@ const toggleDetail = () => {
         font-size: 16px;
         line-height: 24px;
         text-align: right;
-        color: @primaryLabel;
+        color: @secondaryLabel;
         margin: 0 0 1px 0;
       }
 
       p {
         font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 16px;
-        letter-spacing: 0.5px;
-        color: @secondaryLabel;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 21px;
+        letter-spacing: 0px;
+        color: @primary;
         margin: 0;
       }
     }

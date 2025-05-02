@@ -52,29 +52,42 @@ defineProps({
 .settings {
   &__inner-header {
     width: 100%;
-    height: 56px;
-    background: @white;
     box-sizing: border-box;
-    padding: 14px 56px 14px 56px;
+    padding: 0px;
+    position: relative;
+    z-index: 4;
+    margin-bottom: 45px;
 
     h2 {
       font-style: normal;
-      font-weight: bold;
+      font-weight: 500;
       font-size: 20px;
-      line-height: 28px;
+      line-height: 24px;
       margin: 0;
       color: @primaryLabel;
       text-align: center;
     }
   }
-
-  &__back {
+  &__close {
     position: absolute;
-    top: 8px;
-    left: 8px;
+    top: -8px;
+    right: -8px;
     border-radius: 8px;
     cursor: pointer;
-    padding: 8px;
+    font-size: 0;
+    transition: background 300ms ease-in-out;
+
+    &:hover {
+      background: @black007;
+    }
+  }
+  &__back {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 0px;
     font-size: 0;
 
     &:hover {
