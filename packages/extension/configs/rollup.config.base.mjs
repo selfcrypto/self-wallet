@@ -4,7 +4,7 @@ import nodeResolve from "@rollup/plugin-node-resolve";
 import { uglify } from "rollup-plugin-uglify";
 import inject from "@rollup/plugin-inject";
 import replace from "@rollup/plugin-replace";
-import packageJson from "../package.json" assert { type: "json" };
+import packageJson from "../package.json" with { type: "json" };
 
 const enableMinification = process.env.minify === "on";
 const base = {
